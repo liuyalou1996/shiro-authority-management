@@ -11,7 +11,7 @@ import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 
-import com.universe.holder.WebApplicationContextHolder;
+import com.universe.common.holder.WebApplicationContextHolder;
 
 /**
  * 消息转换器以及Thymeleaf试图解析器配置，通过application.properties配置Thymeleaf更方便
@@ -32,7 +32,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
   public SpringResourceTemplateResolver defaultTemplateResolver() {
     SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
     templateResolver.setApplicationContext(WebApplicationContextHolder.getWebApplicationContext());
-    templateResolver.setPrefix("/WEB-INF/templates/");
+    templateResolver.setPrefix("classpath:templates/");
     templateResolver.setSuffix(".html");
     templateResolver.setTemplateMode(TemplateMode.HTML);
     // 修改时自动更新

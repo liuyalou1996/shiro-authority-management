@@ -1,4 +1,4 @@
-package com.universe.shiro.example;
+package com.universe.example;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;

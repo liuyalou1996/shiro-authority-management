@@ -1,4 +1,4 @@
-package com.universe.holder;
+package com.universe.common.holder;
 
 import org.springframework.context.ApplicationContext;
 

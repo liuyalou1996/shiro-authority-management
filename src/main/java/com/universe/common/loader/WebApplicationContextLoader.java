@@ -1,4 +1,4 @@
-package com.universe.loader;
+package com.universe.common.loader;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -8,7 +8,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
-import com.universe.holder.WebApplicationContextHolder;
+import com.universe.common.holder.WebApplicationContextHolder;
 
 @Component
 public class WebApplicationContextLoader implements ApplicationContextAware, BeanDefinitionRegistryPostProcessor {

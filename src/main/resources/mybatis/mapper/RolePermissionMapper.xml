@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.universe.mapper.RolePermissionMapper">
+	<insert id="insertRolePermission">
+		insert into tbl_role_permission ( role_id, perm_id, create_time )
+		values
+		<foreach collection="list" item="rolePermission" separator=" ">
+			( #{rolePermission.roleId}, #{rolePermission.permId}, #{rolePermission.createTime} )
+		</foreach>
+	</insert>
+
+	<update id="deleteRolePermission" parameterType="int">
+		delete tbl_role_permission where id = #{id}
+	</update>
+</mapper>
