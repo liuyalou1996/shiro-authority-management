@@ -1,4 +1,4 @@
-package com.universe.config;
+package com.universe.config.shiro;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -10,6 +10,10 @@ import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSource
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.filter.mgt.DefaultFilter;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
+import org.crazycake.shiro.RedisCacheManager;
+import org.crazycake.shiro.RedisManager;
+import org.crazycake.shiro.RedisSessionDAO;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -18,14 +22,17 @@ import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.PropertySource;
 
 import com.universe.common.entity.properties.ShiroProperties;
-import com.universe.realm.ShiroJdbcRealm;
+import com.universe.config.shiro.realm.ShiroJdbcRealm;
+import com.universe.config.shiro.serializer.ProtostuffSerializer;
+
+import redis.clients.jedis.JedisPool;
 
 @Configuration
 @EnableConfigurationProperties(ShiroProperties.class)
 @PropertySource("classpath:shiro/shiro.properties")
 public class ShiroConfig {
 
-  static class ShiroCoreConfig {
+  static class ShiroCoreComponentConfig {
 
     @Bean
     public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager,
@@ -55,9 +62,45 @@ public class ShiroConfig {
     }
 
     @Bean
-    public SecurityManager securityManager(ShiroJdbcRealm shiroJdbcRealm) {
+    public RedisManager redisManager(JedisPool jedisPool) {
+      RedisManager redisManager = new RedisManager();
+      redisManager.setJedisPool(jedisPool);
+      return redisManager;
+    }
+
+    @Bean
+    public RedisCacheManager redisCacheManager(RedisManager redisManager) {
+      RedisCacheManager cacheManager = new RedisCacheManager();
+      cacheManager.setRedisManager(redisManager);
+
+      ProtostuffSerializer serializer = new ProtostuffSerializer();
+      cacheManager.setKeySerializer(serializer);
+      cacheManager.setValueSerializer(serializer);
+
+      return cacheManager;
+    }
+
+    @Bean
+    public RedisSessionDAO redisSessionDAO(RedisManager redisManager) {
+      RedisSessionDAO redisSessionDAO = new RedisSessionDAO();
+      redisSessionDAO.setRedisManager(redisManager);
+      return redisSessionDAO;
+    }
+
+    @Bean
+    public DefaultWebSessionManager defaultWebSessoinManager(RedisSessionDAO redisSessionDAO) {
+      DefaultWebSessionManager sessionManger = new DefaultWebSessionManager();
+      sessionManger.setSessionDAO(redisSessionDAO);
+      return sessionManger;
+    }
+
+    @Bean
+    public SecurityManager securityManager(ShiroJdbcRealm shiroJdbcRealm, RedisCacheManager redisCacheManager,
+        DefaultWebSessionManager defaultWebSessoinManager) {
       DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
       securityManager.setRealm(shiroJdbcRealm);
+      securityManager.setCacheManager(redisCacheManager);
+      securityManager.setSessionManager(defaultWebSessoinManager);
       return securityManager;
     }
   }
@@ -69,14 +112,18 @@ public class ShiroConfig {
       return new LifecycleBeanPostProcessor();
     }
 
-    @Bean
-    @DependsOn("lifecycleBeanPostProcessor")
-    public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
-      return new DefaultAdvisorAutoProxyCreator();
-    }
   }
 
   static class ShiroAnnotationConfig {
+
+    @Bean
+    @DependsOn("lifecycleBeanPostProcessor")
+    public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
+      DefaultAdvisorAutoProxyCreator creator = new DefaultAdvisorAutoProxyCreator();
+      // 设为true即可使用Jdk动态代理，也可使用Cglib代理
+      creator.setProxyTargetClass(true);
+      return creator;
+    }
 
     @Bean
     public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager) {
@@ -84,6 +131,7 @@ public class ShiroConfig {
       advisor.setSecurityManager(securityManager);
       return advisor;
     }
+
   }
 
 }

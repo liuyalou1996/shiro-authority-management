@@ -18,17 +18,17 @@ import com.universe.common.entity.po.User;
 
 /**
  * @author: liuyalou
- * @date: 2019年8月13日
+ * @date: 2019/9/8
  */
 public interface UserMapper {
 
-  List<User> listUsers();
+	List<User> listUsers();
 
-  User getUserByUsername(String username);
+	User getUserByUsername(String username);
 
-  Integer insertUser(User user);
+	Integer insertUser(User user);
 
-  Integer updateUser(User user);
+	Integer updateUser(User user);
 
-  Integer deleteUserByUserId(Integer userId);
+	Integer deleteUserByUserId(Integer userId);
 }

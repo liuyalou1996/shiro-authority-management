@@ -11,7 +11,6 @@ import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.Factory;
 
-@SuppressWarnings("deprecation")
 public class Tutorial {
 
   public static void main(String[] args) {

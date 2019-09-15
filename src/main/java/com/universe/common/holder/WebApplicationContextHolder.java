@@ -13,4 +13,12 @@ public abstract class WebApplicationContextHolder {
   public static ApplicationContext getWebApplicationContext() {
     return context;
   }
+
+  public static <T> T getBean(Class<T> clazz) {
+    return context.getBean(clazz);
+  }
+
+  public static <T> T getBean(String name, Class<T> clazz) {
+    return context.getBean(name, clazz);
+  }
 }

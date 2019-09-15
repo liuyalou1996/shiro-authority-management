@@ -1,3 +1,6 @@
+# 创建数据库
+create database shiro DEFAULT CHARSET=utf8mb4;
+
 # 用户表
 create table tbl_user
 (
@@ -7,7 +10,7 @@ create table tbl_user
   status tinyint comment '状态(0启用，1禁用)',
   create_time datetime comment '创建时间',
   update_time datetime comment '修改时间'
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 comment '用户表';
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 comment '用户表';
 
 # 角色表
 create table tbl_role
@@ -17,7 +20,7 @@ create table tbl_role
   description varchar(255) comment '角色描述',
   create_time datetime comment '创建时间',
   update_time datetime comment '修改时间'
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 comment '角色表';
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 comment '角色表';
 
 # 权限表
 create table tbl_permission
@@ -27,7 +30,7 @@ create table tbl_permission
   description varchar(255) comment '权限描述',
   create_time datetime comment '创建时间',
   update_time datetime comment '修改时间'
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 comment '权限表';
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 comment '权限表';
 
 # 用户、角色表
 create table tbl_user_role
@@ -36,7 +39,7 @@ create table tbl_user_role
   user_id bigint comment '用户id',
   role_id bigint comment '角色id',
   create_time datetime comment '创建时间'
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 comment '用户-角色表';
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 comment '用户-角色表';
 
 # 角色、权限表
 create table tbl_role_permission
@@ -45,7 +48,7 @@ create table tbl_role_permission
   role_id bigint comment '角色id',
   perm_id bigint comment '权限id',
   creat_time datetime comment '创建时间'
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 # 操作日志表
 create table tbl_operation_log
@@ -55,7 +58,7 @@ create table tbl_operation_log
   op_content varchar(255) comment '操作内容',
   user_id bigint comment '用户id',
   create_time datetime comment '创建时间'
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 # 新增用户
 insert into tbl_user( username, password, status, create_time, update_time)
@@ -69,13 +72,13 @@ values('user','普通用户',now(),now());
 
 # 新增权限
 insert into tbl_permission(perm_name, description, create_time, update_time)
-values('user:insert','新增用户',now(),now());
+values('user:add','新增用户',now(),now());
 insert into tbl_permission(perm_name, description, create_time, update_time)
 values('user:delete','删除用户',now(),now());
 insert into tbl_permission(perm_name, description, create_time, update_time)
 values('user:update','修改用户',now(),now());
 insert into tbl_permission(perm_name, description, create_time, update_time)
-values('user:select','查询用户',now(),now());
+values('user:view','查询用户',now(),now());
 
 # 用户角色映射
 insert into tbl_user_role(user_id, role_id, create_time)

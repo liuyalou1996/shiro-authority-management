@@ -15,8 +15,7 @@
 	</select>
 	
 	<select id="getRolesByUsername" parameterType="string" resultMap="roleResultMap">
-		select tr.role_id,tr.role_name 
-		from tbl_role tr
+		select tr.role_id,tr.role_name from tbl_role tr
 		inner join tbl_user_role tur on tur.role_id = tr.role_id
 		inner join tbl_user tu on (tu.user_id = tur.user_id and tu.status = 0)
 		where tu.username = #{username}

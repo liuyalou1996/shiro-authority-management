@@ -15,13 +15,12 @@
 	</select>
 	
 	<select id="getPermissionsByUsername" parameterType="string" resultMap="permissionResultMap">
-		select tp.perm_id,tp.perm_name 
-		from tbl_permission tp
+		select tp.perm_id,tp.perm_name from tbl_permission tp
 		inner join tbl_role_permission trp on trp.perm_id = tp.perm_id
 		inner join tbl_role tr on tr.role_id = trp.role_id
 		inner join tbl_user_role tur on tur.role_id = tr.role_id
 		inner join tbl_user tu on (tu.user_id = tur.user_id and tu.status = 0)
-		where tu.usename = #{username}
+		where tu.username = #{username}
 	</select>
 	
 	<insert id="insertPermission" parameterType="role">

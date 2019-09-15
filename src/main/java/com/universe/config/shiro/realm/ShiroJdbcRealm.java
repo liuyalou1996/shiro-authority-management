@@ -1,4 +1,4 @@
-package com.universe.realm;
+package com.universe.config.shiro.realm;
 
 import java.util.HashSet;
 import java.util.List;
