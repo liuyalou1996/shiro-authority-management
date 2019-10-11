@@ -10,6 +10,11 @@ import org.springframework.stereotype.Component;
 
 import com.universe.common.holder.WebApplicationContextHolder;
 
+/**
+ * web应用上下文加载器，实现BeanDefinitionRegistryPostProcessor获取最高优先级
+ * @author: liuyalou
+ * @date: 2019年10月11日
+ */
 @Component
 public class WebApplicationContextLoader implements ApplicationContextAware, BeanDefinitionRegistryPostProcessor {
 
