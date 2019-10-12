@@ -43,7 +43,7 @@ public class ShiroJdbcRealm extends AuthorizingRealm {
     User user = userService.getUserByUsername(username);
 
     if (Objects.isNull(user)) {
-      throw new UnknownAccountException("用户名不存在!");
+      throw new UnknownAccountException("用户不存在!");
     }
 
     String password = new String(token.getPassword());

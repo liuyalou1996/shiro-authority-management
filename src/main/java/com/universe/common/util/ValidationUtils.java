@@ -24,7 +24,7 @@ import org.springframework.util.CollectionUtils;
  * @author: liuyalou
  * @date: 2019年6月17日
  */
-public abstract class ValidatingUtils {
+public abstract class ValidationUtils {
 
   public static boolean isEmpty(Object obj) throws IllegalArgumentException {
     if (Objects.isNull(obj)) {
