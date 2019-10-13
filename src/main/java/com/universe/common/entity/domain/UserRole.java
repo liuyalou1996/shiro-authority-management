@@ -10,7 +10,7 @@
  * in accordance with the terms of the contract agreement
  * you entered into with iBoxchain inc.
  */
-package com.universe.common.entity.po;
+package com.universe.common.entity.domain;
 
 import java.util.Date;
 
@@ -21,23 +21,23 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  * @author: liuyalou
  * @date: 2019年8月13日
  */
-public class RolePermission {
+public class UserRole {
 
   private Integer id;
+  private Integer userId;
   private Integer roleId;
-  private Integer permisionId;
   private Date createTime;
 
   public Integer getId() {
     return id;
   }
 
-  public Integer getRoleId() {
-    return roleId;
+  public Integer getUserId() {
+    return userId;
   }
 
-  public Integer getPermisionId() {
-    return permisionId;
+  public Integer getRoleId() {
+    return roleId;
   }
 
   public Date getCreateTime() {
@@ -48,12 +48,12 @@ public class RolePermission {
     this.id = id;
   }
 
-  public void setRoleId(Integer roleId) {
-    this.roleId = roleId;
+  public void setUserId(Integer userId) {
+    this.userId = userId;
   }
 
-  public void setPermisionId(Integer permisionId) {
-    this.permisionId = permisionId;
+  public void setRoleId(Integer roleId) {
+    this.roleId = roleId;
   }
 
   public void setCreateTime(Date createTime) {
@@ -64,4 +64,5 @@ public class RolePermission {
   public String toString() {
     return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
   }
+
 }

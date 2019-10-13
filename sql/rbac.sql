@@ -46,23 +46,23 @@ create table tbl_resource
   type char(1) comment '资源类型,1:菜单,2:按钮',
   priority tinyint comment '资源显示顺序',
   status char(1) comment '状态,0:启用,1:禁用',
-  perm_name varchar(64) comment '权限名称',
+  permission varchar(64) comment '权限名称',
   create_time datetime comment '创建时间',
   update_time datetime comment '修改时间'
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 comment '资源信息表';
 
 
 # 新增资源
-insert into tbl_resource(resource_id, parent_id, resource_name, resource_url, resource_icon, type, priority, status, perm_name, create_time, update_time)
+insert into tbl_resource(resource_id, parent_id, resource_name, resource_url, resource_icon, type, priority, status, permission, create_time, update_time)
 values (1, 0, '系统管理', null, null, '1', 1, '0', null, now(), now());
 
-insert into tbl_resource(resource_id, parent_id, resource_name, resource_url, resource_icon, type, priority, status, perm_name, create_time, update_time)
-values (2, 1, '用户管理', 'system/user.html', 'layui-icon layui-icon-user', '1', 1, '0', 'user:view', now(), now());
-insert into tbl_resource(resource_id, parent_id, resource_name, resource_url, resource_icon, type, priority, status, perm_name, create_time, update_time)
+insert into tbl_resource(resource_id, parent_id, resource_name, resource_url, resource_icon, type, priority, status, permission, create_time, update_time)
+values (2, 1, '用户管理', 'system/management/user', 'layui-icon layui-icon-user', '1', 1, '0', 'user:view', now(), now());
+insert into tbl_resource(resource_id, parent_id, resource_name, resource_url, resource_icon, type, priority, status, permission, create_time, update_time)
 values (3, 2, '新增用户', null, null, '2', null, '0', 'user:add', now(), now());
-insert into tbl_resource(resource_id, parent_id, resource_name, resource_url, resource_icon, type, priority, status, perm_name, create_time, update_time)
+insert into tbl_resource(resource_id, parent_id, resource_name, resource_url, resource_icon, type, priority, status, permission, create_time, update_time)
 values (4, 2, '删除用户', null, null, '2', null, '0', 'user:delete', now(), now());
-insert into tbl_resource(resource_id, parent_id, resource_name, resource_url, resource_icon, type, priority, status, perm_name, create_time, update_time)
+insert into tbl_resource(resource_id, parent_id, resource_name, resource_url, resource_icon, type, priority, status, permission, create_time, update_time)
 values (5, 2, '修改用户', null, null, '2', null, '0', 'user:update', now(), now());
 
 

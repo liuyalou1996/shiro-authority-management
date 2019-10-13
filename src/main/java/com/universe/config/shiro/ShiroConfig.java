@@ -4,6 +4,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
@@ -58,7 +60,16 @@ public class ShiroConfig {
 
     @Bean
     public ShiroJdbcRealm shiroJdbcRealm() {
-      return new ShiroJdbcRealm();
+      ShiroJdbcRealm shiroJdbcRealm = new ShiroJdbcRealm();
+      HashedCredentialsMatcher matcher = new HashedCredentialsMatcher();
+      // 散列算法采用md5
+      matcher.setHashAlgorithmName(Md5Hash.ALGORITHM_NAME);
+      // 设置散列迭代次数为两次
+      matcher.setHashIterations(2);
+      // 设置存储的密码是否是16进制编码，false代表Base64编码
+      matcher.setStoredCredentialsHexEncoded(true);
+      shiroJdbcRealm.setCredentialsMatcher(matcher);
+      return shiroJdbcRealm;
     }
 
     @Bean

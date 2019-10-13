@@ -1,15 +1,3 @@
-/*
- * Copyright (C) 2011-2019 ShenZhen iBOXCHAIN Information Technology Co.,Ltd.
- *
- * All right reserved.
- *
- * This software is the confidential and proprietary
- * information of iBoxChain Company of China.
- * ("Confidential Information"). You shall not disclose
- * such Confidential Information and shall use it only
- * in accordance with the terms of the contract agreement
- * you entered into with iBoxchain inc.
- */
 package com.universe.service.impl;
 
 import java.util.List;
@@ -17,14 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.universe.common.entity.po.User;
+import com.universe.common.entity.domain.User;
 import com.universe.mapper.UserMapper;
 import com.universe.service.UserService;
 
-/**
- * @author: liuyalou
- * @date: 2019年8月15日
- */
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -42,8 +26,8 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public Integer insertUser(User user) {
-    return userMapper.insertUser(user);
+  public Integer saveUser(User user) {
+    return userMapper.saveUser(user);
   }
 
   @Override
@@ -52,8 +36,8 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public Integer deleteUserByUserId(Integer userId) {
-    return userMapper.deleteUserByUserId(userId);
+  public Integer removeUserByUserId(Integer userId) {
+    return userMapper.removeUserByUserId(userId);
   }
 
 }
