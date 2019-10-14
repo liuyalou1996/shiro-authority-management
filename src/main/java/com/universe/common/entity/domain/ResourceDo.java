@@ -8,7 +8,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 public class ResourceDo {
 
   private Integer resourceId;
-  private Integer parentInd;
+  private Integer parentId;
   private String resourceName;
   private String resourceUrl;
   private String resourceIcon;
@@ -23,8 +23,8 @@ public class ResourceDo {
     return resourceId;
   }
 
-  public Integer getParentInd() {
-    return parentInd;
+  public Integer getParentId() {
+    return parentId;
   }
 
   public String getResourceName() {
@@ -67,8 +67,8 @@ public class ResourceDo {
     this.resourceId = resourceId;
   }
 
-  public void setParentInd(Integer parentInd) {
-    this.parentInd = parentInd;
+  public void setParentId(Integer parentId) {
+    this.parentId = parentId;
   }
 
   public void setResourceName(String resourceName) {

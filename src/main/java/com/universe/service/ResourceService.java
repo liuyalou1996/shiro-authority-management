@@ -10,6 +10,8 @@ public interface ResourceService {
 
   List<ResourceDo> getResourcesByUsername(String username);
 
+  List<String> getPermissionsByUsername(String username);
+
   Integer saveResource(ResourceDo resource);
 
   Integer updateResource(ResourceDo resource);

@@ -2,33 +2,48 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.universe.mapper.ResourceDoMapper">
 
-	<resultMap id="resourceResultMap" type="resource">
-		<id property="permId" column=resource_id />
-		<result property="permName" column="perm_name" />
-		<result property="description" column="description" />
+	<resultMap id="resourceResultMap" type="resourcedo">
+		<id property="resourceId" column="resource_id" />
+		<result property="parentId" column="parent_id" />
+		<result property="resourceName" column="resource_name" />
+		<result property="resourceUrl" column="resource_url" />
+		<result property="resourceIcon" column="resource_icon" />
+		<result property="type" column="type" />
+		<result property="priority" column="priority" />
+		<result property="status" column="status" />
+		<result property="permission" column="permission" />
 		<result property="createTime" column="create_time" />
 		<result property="updateTime" column="update_time" />
 	</resultMap>
-
-	<select id="listResources" resultMap="permissionResultMap">
-		select perm_id,perm_name,description,create_time,update_time from tbl_role
+	
+	<sql id="resource_column">
+		resource_id,parent_id,resource_name,resource_url,resource_icon,type,priority,status,permission,create_time,update_time
+	</sql>
+	
+	<select id="listResources" resultMap="resourceResultMap">
+		select <include refid="resource_column" /> from tbl_role
 	</select>
 	
-	<select id="getResourcesByUsername" parameterType="string" resultMap="permissionResultMap">
-		select tp.perm_id,tp.perm_name from tbl_permission tp
-		inner join tbl_role_permission trp on trp.perm_id = tp.perm_id
-		inner join tbl_role tr on tr.role_id = trp.role_id
-		inner join tbl_user_role tur on tur.role_id = tr.role_id
-		inner join tbl_user tu on (tu.user_id = tur.user_id and tu.status = 0)
+	<select id="getResourcesByUsername" parameterType="string" resultMap="resourceResultMap">
+		select trr.resource_id,parent_id,resource_name,resource_url,permission from tbl_resource tr
+		inner join tbl_role_resource trr on (trr.resource_id = tr.resource_id and tr.status = '0')
+		inner join tbl_user_role tur on tur.role_id = trr.role_id
+		inner join tbl_user tu on (tu.user_id = tur.user_id and tu.status = '0')
 		where tu.username = #{username}
 	</select>
 	
-	<insert id="saveResource" parameterType="role">
-		insert into tbl_permission ( perm_name, description, create_time, update_time )
-		values ( #{permName}, #{description}, #{createTime}, #{updateTime} )
+	<select id="getPermissionsByUsername" parameterType="string" resultType="string">
+		select permission from tbl_resource tr
+		inner join tbl_role_resource trr on (trr.resource_id = tr.resource_id and tr.status = '0')
+		inner join tbl_user_role tur on tur.role_id = trr.role_id
+		inner join tbl_user tu on (tu.user_id = tur.user_id and tu.status = '0')
+		where permission is not null and tu.username = #{username}
+	</select>
+	
+	<insert id="saveResource" parameterType="resourcedo">
 	</insert>
 	
-	<update id="updateResource" parameterType="role">
+	<update id="updateResource" parameterType="resourcedo">
 		update tbl_permission
 		<set>
 			<if test="@com.universe.common.util.ValidatingUtils@isEmpty(permName)">

@@ -112,3 +112,4 @@ mvnw
 mvnw.cmd
 .mvn/*
 # End of https://www.gitignore.io/api/java,maven,eclipse,java-web
+logs/

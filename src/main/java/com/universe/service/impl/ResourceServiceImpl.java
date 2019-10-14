@@ -40,4 +40,9 @@ public class ResourceServiceImpl implements ResourceService {
     return resourceMapper.removeResourceByResourceId(resourceId);
   }
 
+  @Override
+  public List<String> getPermissionsByUsername(String username) {
+    return resourceMapper.getPermissionsByUsername(username);
+  }
+
 }

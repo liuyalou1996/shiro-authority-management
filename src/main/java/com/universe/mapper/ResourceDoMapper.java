@@ -9,6 +9,8 @@ public interface ResourceDoMapper {
   List<ResourceDo> listResources();
 
   List<ResourceDo> getResourcesByUsername(String username);
+  
+  List<String> getPermissionsByUsername(String username);
 
   Integer saveResource(ResourceDo resource);
 

@@ -21,7 +21,6 @@ import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.universe.common.emuneration.UserStatus;
-import com.universe.common.entity.domain.ResourceDo;
 import com.universe.common.entity.domain.RoleDo;
 import com.universe.common.entity.domain.UserDo;
 import com.universe.service.ResourceService;
@@ -67,12 +66,11 @@ public class ShiroJdbcRealm extends AuthorizingRealm {
   protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
     String username = (String) principals.getPrimaryPrincipal();
     List<RoleDo> roleList = roleService.getRolesByUsername(username);
-    List<ResourceDo> resourceList = resourceService.getResourcesByUsername(username);
+    List<String> permissionList = resourceService.getPermissionsByUsername(username);
 
     Set<String> roleSet = new HashSet<String>();
     roleList.forEach(role -> roleSet.add(role.getRoleName()));
-    Set<String> permissionSet = new HashSet<String>();
-    resourceList.forEach(resource -> permissionSet.add(resource.getPermission()));
+    Set<String> permissionSet = new HashSet<String>(permissionList);
 
     SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
     authorizationInfo.setRoles(roleSet);
