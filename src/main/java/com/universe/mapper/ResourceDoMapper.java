@@ -1,10 +1,10 @@
-package com.universe.service;
+package com.universe.mapper;
 
 import java.util.List;
 
 import com.universe.common.entity.domain.ResourceDo;
 
-public interface ResourceService {
+public interface ResourceDoMapper {
 
   List<ResourceDo> listResources();
 

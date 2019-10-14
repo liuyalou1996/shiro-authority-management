@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.universe.mapper.UserMapper">
+<mapper namespace="com.universe.mapper.UserDoMapper">
 
-	<resultMap id="userResultMap" type="user">
+	<resultMap id="userResultMap" type="userdo">
 		<id property="userId" column="user_id" />
 		<result property="username" column="username" />
 		<result property="password" column="password" />
@@ -12,20 +12,19 @@
 	</resultMap>
 	
 	<select id="listUsers" resultMap="userResultMap">
-		select user_id, username, password, status, create_time, update_time 
-		from tbl_user where status = 0
+		select user_id, username, password, status, create_time, update_time from tbl_user
 	</select>
 	
 	<select id="getUserByUsername" parameterType="string" resultMap="userResultMap">
-		select username,password from tbl_user where username = #{username} and status = 0
+		select username,password,status from tbl_user where username = #{username}
 	</select>
 	
-	<insert id="insertUser" parameterType="user">
+	<insert id="saveUser" parameterType="userdo">
 		insert into tbl_user ( username, password, status, create_time, update_time ) 
 		values (#{username}, #{password}, #{status}, #{createTime}, #{updateTime} )
 	</insert>
 	
-	<update id="updateUser" parameterType="user">
+	<update id="updateUser" parameterType="userdo">
 		update tbl_user
 		<set>
 			<if test="@com.universe.common.util.ValidatingUtils@isEmpty(username)">
@@ -47,7 +46,7 @@
 		where user_id = #{userId}
 	</update>
 	
-	<update id="deleteUserByUserId" parameterType="int">
+	<update id="removeUserByUserId" parameterType="int">
 		delete tbl_user where user_id = #{userId}
 	</update>
 </mapper>

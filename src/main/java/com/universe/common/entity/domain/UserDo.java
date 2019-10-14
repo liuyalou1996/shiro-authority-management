@@ -5,7 +5,7 @@ import java.util.Date;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-public class User {
+public class UserDo {
 
   private Integer userId;
   private String username;

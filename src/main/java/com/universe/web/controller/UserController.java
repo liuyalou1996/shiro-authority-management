@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.universe.common.entity.domain.User;
+import com.universe.common.entity.domain.UserDo;
 import com.universe.common.entity.dto.GenericResponseDto;
 import com.universe.service.UserService;
 
@@ -20,7 +20,7 @@ public class UserController {
   @PostMapping("/user/add")
   @ResponseBody
   @RequiresPermissions("user:add")
-  public GenericResponseDto addUser(@RequestBody User user) {
+  public GenericResponseDto addUser(@RequestBody UserDo user) {
     GenericResponseDto response = new GenericResponseDto();
     Integer result = userService.saveUser(user);
 

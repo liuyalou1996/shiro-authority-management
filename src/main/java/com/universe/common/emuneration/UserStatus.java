@@ -1,7 +1,19 @@
 package com.universe.common.emuneration;
 
 public enum UserStatus {
-  NORMAL("0"), FORBIDDEN("1"), LOCKED("2");
+
+  /**
+   * 正常
+   */
+  NORMAL("0"),
+  /**
+   * 禁用
+   */
+  FORBIDDEN("1"),
+  /**
+   * 锁定
+   */
+  LOCKED("2");
 
   private String value;
 

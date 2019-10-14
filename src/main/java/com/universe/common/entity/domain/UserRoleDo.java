@@ -21,7 +21,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  * @author: liuyalou
  * @date: 2019年8月13日
  */
-public class UserRole {
+public class UserRoleDo {
 
   private Integer id;
   private Integer userId;

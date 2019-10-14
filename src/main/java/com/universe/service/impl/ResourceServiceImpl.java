@@ -5,39 +5,39 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.universe.common.entity.domain.Resource;
-import com.universe.mapper.ResourceMapper;
+import com.universe.common.entity.domain.ResourceDo;
+import com.universe.mapper.ResourceDoMapper;
 import com.universe.service.ResourceService;
 
 @Service
 public class ResourceServiceImpl implements ResourceService {
 
   @Autowired
-  private ResourceMapper resourceMapper;
+  private ResourceDoMapper resourceMapper;
 
   @Override
-  public List<Resource> listResources() {
+  public List<ResourceDo> listResources() {
     return resourceMapper.listResources();
   }
 
   @Override
-  public List<Resource> getResourcesByUsername(String username) {
+  public List<ResourceDo> getResourcesByUsername(String username) {
     return resourceMapper.getResourcesByUsername(username);
   }
 
   @Override
-  public Integer saveResource(Resource resource) {
+  public Integer saveResource(ResourceDo resource) {
     return resourceMapper.saveResource(resource);
   }
 
   @Override
-  public Integer updateResource(Resource resource) {
+  public Integer updateResource(ResourceDo resource) {
     return resourceMapper.updateResource(resource);
   }
 
   @Override
-  public Integer deleteResourceByResourceId(Integer resourceId) {
-    return resourceMapper.deleteResourceByResourceId(resourceId);
+  public Integer removeResourceByResourceId(Integer resourceId) {
+    return resourceMapper.removeResourceByResourceId(resourceId);
   }
 
 }

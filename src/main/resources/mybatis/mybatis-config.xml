@@ -7,6 +7,6 @@
 	</settings>
 
 	<typeAliases>
-		<package name="com.universe.common.entity.po" />
+		<package name="com.universe.common.entity.domain" />
 	</typeAliases>
 </configuration>

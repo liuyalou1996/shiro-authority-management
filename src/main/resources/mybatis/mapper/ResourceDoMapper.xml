@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.universe.mapper.PermissionMapper">
+<mapper namespace="com.universe.mapper.ResourceDoMapper">
 
-	<resultMap id="permissionResultMap" type="permission">
-		<id property="permId" column="perm_id" />
+	<resultMap id="resourceResultMap" type="resource">
+		<id property="permId" column=resource_id />
 		<result property="permName" column="perm_name" />
 		<result property="description" column="description" />
 		<result property="createTime" column="create_time" />
 		<result property="updateTime" column="update_time" />
 	</resultMap>
 
-	<select id="listPermissions" resultMap="permissionResultMap">
+	<select id="listResources" resultMap="permissionResultMap">
 		select perm_id,perm_name,description,create_time,update_time from tbl_role
 	</select>
 	
-	<select id="getPermissionsByUsername" parameterType="string" resultMap="permissionResultMap">
+	<select id="getResourcesByUsername" parameterType="string" resultMap="permissionResultMap">
 		select tp.perm_id,tp.perm_name from tbl_permission tp
 		inner join tbl_role_permission trp on trp.perm_id = tp.perm_id
 		inner join tbl_role tr on tr.role_id = trp.role_id
@@ -23,12 +23,12 @@
 		where tu.username = #{username}
 	</select>
 	
-	<insert id="insertPermission" parameterType="role">
+	<insert id="saveResource" parameterType="role">
 		insert into tbl_permission ( perm_name, description, create_time, update_time )
 		values ( #{permName}, #{description}, #{createTime}, #{updateTime} )
 	</insert>
 	
-	<update id="updatePermission" parameterType="role">
+	<update id="updateResource" parameterType="role">
 		update tbl_permission
 		<set>
 			<if test="@com.universe.common.util.ValidatingUtils@isEmpty(permName)">
@@ -47,7 +47,7 @@
 		where perm_id = #{permId}
 	</update>
 	
-	<update id="deletePermissionByPermId" parameterType="int">
+	<update id="removeResourceByResourceId" parameterType="int">
 		delete tbl_role where role_id = #{roleId}
 	</update>
 </mapper>

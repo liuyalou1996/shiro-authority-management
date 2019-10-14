@@ -2,42 +2,51 @@ package com.universe.service.impl;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.universe.common.entity.domain.User;
-import com.universe.mapper.UserMapper;
+import com.universe.common.entity.domain.UserDo;
+import com.universe.mapper.UserDoMapper;
 import com.universe.service.UserService;
 
 @Service
 public class UserServiceImpl implements UserService {
 
   @Autowired
-  private UserMapper userMapper;
+  private UserDoMapper userMapper;
 
   @Override
-  public List<User> listUsers() {
+  public List<UserDo> listUsers() {
     return userMapper.listUsers();
   }
 
   @Override
-  public User getUserByUsername(String username) {
+  public UserDo getUserByUsername(String username) {
     return userMapper.getUserByUsername(username);
   }
 
   @Override
-  public Integer saveUser(User user) {
+  public Integer saveUser(UserDo user) {
+    if (user == null || StringUtils.isBlank(user.getUsername())) {
+      return 0;
+    }
+
     return userMapper.saveUser(user);
   }
 
   @Override
-  public Integer updateUser(User user) {
+  public Integer updateUser(UserDo user) {
     return userMapper.updateUser(user);
   }
 
   @Override
   public Integer removeUserByUserId(Integer userId) {
     return userMapper.removeUserByUserId(userId);
+  }
+
+  public String generateHashedPassword(String rawPassowrd, String salt) {
+    return null;
   }
 
 }

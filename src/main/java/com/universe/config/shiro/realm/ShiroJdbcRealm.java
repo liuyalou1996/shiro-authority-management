@@ -7,6 +7,7 @@ import java.util.Set;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.DisabledAccountException;
 import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -20,9 +21,9 @@ import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.universe.common.emuneration.UserStatus;
-import com.universe.common.entity.domain.Resource;
-import com.universe.common.entity.domain.Role;
-import com.universe.common.entity.domain.User;
+import com.universe.common.entity.domain.ResourceDo;
+import com.universe.common.entity.domain.RoleDo;
+import com.universe.common.entity.domain.UserDo;
 import com.universe.service.ResourceService;
 import com.universe.service.RoleService;
 import com.universe.service.UserService;
@@ -41,14 +42,17 @@ public class ShiroJdbcRealm extends AuthorizingRealm {
   @Override
   protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authToken) throws AuthenticationException {
     String loginUsername = ((UsernamePasswordToken) authToken).getUsername();
-    User user = userService.getUserByUsername(loginUsername);
-
+    UserDo user = userService.getUserByUsername(loginUsername);
     if (user == null) {
       throw new UnknownAccountException("用户不存在!");
     }
 
-    if (UserStatus.LOCKED == UserStatus.valueOf(user.getStatus())) {
+    String usetStatus = user.getStatus();
+    if (UserStatus.LOCKED == UserStatus.valueOf(usetStatus)) {
       throw new LockedAccountException("账号已被锁定!");
+    }
+    if (UserStatus.FORBIDDEN == UserStatus.valueOf(usetStatus)) {
+      throw new DisabledAccountException("账号已被禁用!");
     }
 
     // 返回认证信息
@@ -62,8 +66,8 @@ public class ShiroJdbcRealm extends AuthorizingRealm {
   @Override
   protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
     String username = (String) principals.getPrimaryPrincipal();
-    List<Role> roleList = roleService.getRolesByUsername(username);
-    List<Resource> resourceList = resourceService.getResourcesByUsername(username);
+    List<RoleDo> roleList = roleService.getRolesByUsername(username);
+    List<ResourceDo> resourceList = resourceService.getResourcesByUsername(username);
 
     Set<String> roleSet = new HashSet<String>();
     roleList.forEach(role -> roleSet.add(role.getRoleName()));

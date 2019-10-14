@@ -5,7 +5,7 @@ import java.util.Date;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-public class Role {
+public class RoleDo {
 
   private Integer roleId;
   private String roleName;

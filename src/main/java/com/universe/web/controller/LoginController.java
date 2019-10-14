@@ -17,10 +17,10 @@ public class LoginController {
   @PostMapping("/auth/login")
   public GenericResponseDto login(String username, String password) {
     UsernamePasswordToken token = new UsernamePasswordToken(username, password, true);
-    Subject subject = SecurityUtils.getSubject();
     GenericResponseDto response = new GenericResponseDto();
 
     try {
+      Subject subject = SecurityUtils.getSubject();
       subject.login(token);
       response.setResultCode(0);
       response.setResultDesc("登录成功");

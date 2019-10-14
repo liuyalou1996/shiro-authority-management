@@ -1,10 +1,10 @@
-package com.universe.service;
+package com.universe.mapper;
 
 import java.util.List;
 
 import com.universe.common.entity.domain.RoleDo;
 
-public interface RoleService {
+public interface RoleDoMapper {
 
   List<RoleDo> listRoles();
 
@@ -15,5 +15,4 @@ public interface RoleService {
   Integer updateRole(RoleDo role);
 
   Integer removeRoleByRoleId(Integer roleId);
-
 }

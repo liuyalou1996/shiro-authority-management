@@ -13,10 +13,10 @@ public class PasswordGenerationExample {
 
   public static String generateHashedPassword(String rawPassword, String salt) {
     SimpleHash hash = new SimpleHash(Md5Hash.ALGORITHM_NAME, rawPassword, salt, 2);
-    return hash.toString();
+    return hash.toHex();
   }
 
   public static void main(String[] args) {
-    
+
   }
 }
