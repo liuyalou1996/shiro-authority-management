@@ -36,11 +36,11 @@ public class RedisConfig {
 
   @Bean
   public JedisPool jedisPool(JedisPoolConfig jedisPoolConfig, RedisProperties redisProperties) {
-    ServerProperties properteis = redisProperties.getServer();
-    String host = properteis.getHost();
-    int port = properteis.getPort();
-    String password = properteis.getPassword();
-    int timeout = properteis.getTimeout();
+    ServerProperties properties = redisProperties.getServer();
+    String host = properties.getHost();
+    int port = properties.getPort();
+    String password = properties.getPassword();
+    int timeout = properties.getTimeout();
 
     JedisPool jedisPool = new JedisPool(jedisPoolConfig, host, port, timeout, password);
     return jedisPool;

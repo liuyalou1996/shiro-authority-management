@@ -35,6 +35,8 @@ public class ShiroProperties {
   private String successUrl;
   private String logoutUrl;
   private String unauthorizedUrl;
+  private Integer remembermeCookieMaxAge;
+  private Long sessionTimeout;
 
   public String getAnonUrl() {
     return anonUrl;
@@ -86,6 +88,22 @@ public class ShiroProperties {
 
   public void setUnauthorizedUrl(String unauthorizedUrl) {
     this.unauthorizedUrl = unauthorizedUrl;
+  }
+
+  public Integer getRemembermeCookieMaxAge() {
+    return remembermeCookieMaxAge;
+  }
+
+  public Long getSessionTimeout() {
+    return sessionTimeout;
+  }
+
+  public void setRemembermeCookieMaxAge(Integer remembermeCookieMaxAge) {
+    this.remembermeCookieMaxAge = remembermeCookieMaxAge;
+  }
+
+  public void setSessionTimeout(Long sessionTimeout) {
+    this.sessionTimeout = sessionTimeout;
   }
 
   @Override

@@ -28,7 +28,7 @@
 		<thymeleaf.shiro.version>2.0.0</thymeleaf.shiro.version>
 		<jedis.version>3.1.0</jedis.version>
 		<protostuff.version>1.6.0</protostuff.version>
-		<shiro.redis.version>3.2.2</shiro.redis.version>
+		<shiro.redis.version>3.2.3</shiro.redis.version>
 	</properties>
 
 	<dependencies>

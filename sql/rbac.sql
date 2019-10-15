@@ -14,10 +14,10 @@ create table tbl_user
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 comment '用户表';
 
 # 新增用户
-insert into tbl_user (user_id, username, password, status, salt, create_time, update_time)
-values (1,'root', 'lyl', '0', '8bc0fea465bb49dd833ec52a123d9a47', now(), now());
-insert into tbl_user (user_id, username, password, status, salt, create_time, update_time)
-values (2,'guest', 'guest', '0', 'b1d9d67a25e045e987ab1a331bc42c05', now(), now());
+insert into tbl_user (user_id, username, password, salt, status, create_time, update_time)
+values (1, 'root', '0e40accdff6a29d9bae818324aee80b8', '6cb007ce3a578cc024f8024b5e9326b4', '0', now(), now());
+insert into tbl_user (user_id, username, password, salt, status, create_time, update_time)
+values (2, 'guest', '2373be683da86fc5b48ceb3312f7cc93', '9061bf91cb4e550a4857c4dfa0e75b06', '0', now(), now());
 
 # 角色表
 create table tbl_role

@@ -119,4 +119,8 @@ public abstract class ProtostuffUtils {
       return "CollectionWrapper [list=" + list + ", map=" + map + "]";
     }
   }
+  
+  public static void main(String[] args) {
+    System.out.println(Object.class.getSuperclass());
+  }
 }

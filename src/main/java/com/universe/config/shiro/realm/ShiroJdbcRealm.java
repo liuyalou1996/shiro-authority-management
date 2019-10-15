@@ -46,11 +46,11 @@ public class ShiroJdbcRealm extends AuthorizingRealm {
       throw new UnknownAccountException("用户不存在!");
     }
 
-    String usetStatus = user.getStatus();
-    if (UserStatus.LOCKED == UserStatus.valueOf(usetStatus)) {
+    String userStatus = user.getStatus();
+    if (UserStatus.LOCKED.getValue().equals(userStatus)) {
       throw new LockedAccountException("账号已被锁定!");
     }
-    if (UserStatus.FORBIDDEN == UserStatus.valueOf(usetStatus)) {
+    if (UserStatus.FORBIDDEN.getValue().equals(userStatus)) {
       throw new DisabledAccountException("账号已被禁用!");
     }
 

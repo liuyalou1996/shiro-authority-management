@@ -5,18 +5,21 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
-import org.apache.shiro.crypto.hash.Md5Hash;
+import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.filter.mgt.DefaultFilter;
+import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.servlet.SimpleCookie;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.crazycake.shiro.RedisCacheManager;
 import org.crazycake.shiro.RedisManager;
 import org.crazycake.shiro.RedisSessionDAO;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,8 +27,8 @@ import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.PropertySource;
 
 import com.universe.common.entity.properties.ShiroProperties;
+import com.universe.common.util.PasswordGenerationUtils;
 import com.universe.config.shiro.realm.ShiroJdbcRealm;
-import com.universe.config.shiro.serializer.ProtostuffSerializer;
 
 import redis.clients.jedis.JedisPool;
 
@@ -36,23 +39,25 @@ public class ShiroConfig {
 
   static class ShiroCoreComponentConfig {
 
+    @Autowired
+    public ShiroProperties shiroProperties;
+
     @Bean
-    public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager,
-        ShiroProperties shiroProperties) {
+    public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) {
       ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
       shiroFilterFactoryBean.setSecurityManager(securityManager);
       // 设置登录url，默认为login.jsp
       shiroFilterFactoryBean.setLoginUrl(shiroProperties.getLoginUrl());
       // 设置无权限跳转的url
       shiroFilterFactoryBean.setUnauthorizedUrl(shiroProperties.getUnauthorizedUrl());
-      // 键为url表达式，值为逗号分隔的过滤器名
+      // 键为url表达式，值为逗号分隔的过滤器名，各过滤器保证顺序
       Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
       List<String> anonUrlList = shiroProperties.getAnonUrlList();
       anonUrlList.forEach(anonUrl -> {
         filterChainDefinitionMap.put(anonUrl, DefaultFilter.anon.name());
       });
       filterChainDefinitionMap.put(shiroProperties.getLogoutUrl(), DefaultFilter.logout.name());
-      filterChainDefinitionMap.put(shiroProperties.getAuthUrl(), DefaultFilter.authc.name());
+      filterChainDefinitionMap.put(shiroProperties.getAuthUrl(), DefaultFilter.user.name());
 
       shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
       return shiroFilterFactoryBean;
@@ -62,11 +67,8 @@ public class ShiroConfig {
     public ShiroJdbcRealm shiroJdbcRealm() {
       ShiroJdbcRealm shiroJdbcRealm = new ShiroJdbcRealm();
       HashedCredentialsMatcher matcher = new HashedCredentialsMatcher();
-      // 散列算法采用md5
-      matcher.setHashAlgorithmName(Md5Hash.ALGORITHM_NAME);
-      // 设置散列迭代次数为两次
-      matcher.setHashIterations(2);
-      // 设置存储的密码是否是16进制编码，false代表Base64编码
+      matcher.setHashAlgorithmName(PasswordGenerationUtils.HASH_ALGORITHM);
+      matcher.setHashIterations(PasswordGenerationUtils.HASH_ITERATIONS);
       matcher.setStoredCredentialsHexEncoded(true);
       shiroJdbcRealm.setCredentialsMatcher(matcher);
       return shiroJdbcRealm;
@@ -83,11 +85,6 @@ public class ShiroConfig {
     public RedisCacheManager redisCacheManager(RedisManager redisManager) {
       RedisCacheManager cacheManager = new RedisCacheManager();
       cacheManager.setRedisManager(redisManager);
-
-      ProtostuffSerializer serializer = new ProtostuffSerializer();
-      cacheManager.setKeySerializer(serializer);
-      cacheManager.setValueSerializer(serializer);
-
       return cacheManager;
     }
 
@@ -102,16 +99,28 @@ public class ShiroConfig {
     public DefaultWebSessionManager defaultWebSessoinManager(RedisSessionDAO redisSessionDAO) {
       DefaultWebSessionManager sessionManger = new DefaultWebSessionManager();
       sessionManger.setSessionDAO(redisSessionDAO);
+      sessionManger.setGlobalSessionTimeout(shiroProperties.getSessionTimeout() * 1000);
       return sessionManger;
     }
 
     @Bean
+    public CookieRememberMeManager remembermeManager() {
+      CookieRememberMeManager remembermeManager = new CookieRememberMeManager();
+      SimpleCookie cookie = new SimpleCookie(CookieRememberMeManager.DEFAULT_REMEMBER_ME_COOKIE_NAME);
+      cookie.setMaxAge(shiroProperties.getRemembermeCookieMaxAge());
+      remembermeManager.setCookie(cookie);
+      remembermeManager.setCipherKey(Base64.decode("odVEfs13xfPO3g3bKEvO3g=="));
+      return remembermeManager;
+    }
+
+    @Bean
     public SecurityManager securityManager(ShiroJdbcRealm shiroJdbcRealm, RedisCacheManager redisCacheManager,
-        DefaultWebSessionManager defaultWebSessoinManager) {
+        DefaultWebSessionManager defaultWebSessoinManager, CookieRememberMeManager remembermeManager) {
       DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
       securityManager.setRealm(shiroJdbcRealm);
       securityManager.setCacheManager(redisCacheManager);
       securityManager.setSessionManager(defaultWebSessoinManager);
+      securityManager.setRememberMeManager(remembermeManager);
       return securityManager;
     }
   }
@@ -131,7 +140,7 @@ public class ShiroConfig {
     @DependsOn("lifecycleBeanPostProcessor")
     public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
       DefaultAdvisorAutoProxyCreator creator = new DefaultAdvisorAutoProxyCreator();
-      // 设为true即可使用Jdk动态代理，也可使用Cglib代理
+      // 设为true即可使用Jdk动态代理，也可使用Cglib代理，否则无法拦截控制器的请求处理方法
       creator.setProxyTargetClass(true);
       return creator;
     }

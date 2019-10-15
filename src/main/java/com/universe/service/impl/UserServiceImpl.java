@@ -2,11 +2,12 @@ package com.universe.service.impl;
 
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.universe.common.entity.domain.UserDo;
+import com.universe.common.util.PasswordGenerationUtils;
 import com.universe.mapper.UserDoMapper;
 import com.universe.service.UserService;
 
@@ -28,10 +29,14 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public Integer saveUser(UserDo user) {
-    if (user == null || StringUtils.isBlank(user.getUsername())) {
+    if (user == null) {
       return 0;
     }
 
+    String salt = PasswordGenerationUtils.generatePasswordSalt();
+    String hashedPassword = PasswordGenerationUtils.generateHashedPassword(user.getPassword(), salt);
+    user.setSalt(salt);
+    user.setPassword(hashedPassword);
     return userMapper.saveUser(user);
   }
 
@@ -45,8 +50,11 @@ public class UserServiceImpl implements UserService {
     return userMapper.removeUserByUserId(userId);
   }
 
-  public String generateHashedPassword(String rawPassowrd, String salt) {
-    return null;
+  public static void main(String[] args) {
+    String salt = new SecureRandomNumberGenerator().nextBytes().toHex();
+    String hashedPassword = PasswordGenerationUtils.generateHashedPassword("guest", salt);
+    System.out.println(salt);
+    System.out.println(hashedPassword);
   }
 
 }

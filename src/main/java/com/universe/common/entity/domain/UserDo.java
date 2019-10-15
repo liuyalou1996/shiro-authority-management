@@ -10,8 +10,8 @@ public class UserDo {
   private Integer userId;
   private String username;
   private String password;
-  private String status;
   private String salt;
+  private String status;
   private Date createTime;
   private Date updateTime;
 
@@ -27,12 +27,12 @@ public class UserDo {
     return password;
   }
 
-  public String getStatus() {
-    return status;
-  }
-
   public String getSalt() {
     return salt;
+  }
+
+  public String getStatus() {
+    return status;
   }
 
   public Date getCreateTime() {
@@ -55,12 +55,12 @@ public class UserDo {
     this.password = password;
   }
 
-  public void setStatus(String status) {
-    this.status = status;
-  }
-
   public void setSalt(String salt) {
     this.salt = salt;
+  }
+
+  public void setStatus(String status) {
+    this.status = status;
   }
 
   public void setCreateTime(Date createTime) {
