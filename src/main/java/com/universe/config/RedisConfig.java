@@ -1,5 +1,6 @@
 package com.universe.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,8 +18,11 @@ import redis.clients.jedis.JedisPoolConfig;
 @EnableConfigurationProperties(RedisProperties.class)
 public class RedisConfig {
 
+  @Autowired
+  private RedisProperties redisProperties;
+
   @Bean
-  public JedisPoolConfig jedisPoolConfig(RedisProperties redisProperties) {
+  public JedisPoolConfig jedisPoolConfig() {
     JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
     ConnectionPoolProperties properties = redisProperties.getPool();
     jedisPoolConfig.setMaxTotal(properties.getMaxTotal());
@@ -35,7 +39,7 @@ public class RedisConfig {
   }
 
   @Bean
-  public JedisPool jedisPool(JedisPoolConfig jedisPoolConfig, RedisProperties redisProperties) {
+  public JedisPool jedisPool(JedisPoolConfig jedisPoolConfig) {
     ServerProperties properties = redisProperties.getServer();
     String host = properties.getHost();
     int port = properties.getPort();

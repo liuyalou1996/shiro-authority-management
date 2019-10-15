@@ -1,5 +1,6 @@
 package com.universe.config.shiro;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +28,8 @@ import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.PropertySource;
 
 import com.universe.common.entity.properties.ShiroProperties;
+import com.universe.common.util.EncryptUtils;
+import com.universe.common.util.EncryptUtils.Algorithm;
 import com.universe.common.util.PasswordGenerationUtils;
 import com.universe.config.shiro.realm.ShiroJdbcRealm;
 
@@ -104,12 +107,15 @@ public class ShiroConfig {
     }
 
     @Bean
-    public CookieRememberMeManager remembermeManager() {
-      CookieRememberMeManager remembermeManager = new CookieRememberMeManager();
+    public CookieRememberMeManager remembermeManager() throws NoSuchAlgorithmException {
+      // key默认为AES加密秘钥
+      String cipherKey = EncryptUtils.generateSymmetricKey(Algorithm.AES);
       SimpleCookie cookie = new SimpleCookie(CookieRememberMeManager.DEFAULT_REMEMBER_ME_COOKIE_NAME);
       cookie.setMaxAge(shiroProperties.getRemembermeCookieMaxAge());
+
+      CookieRememberMeManager remembermeManager = new CookieRememberMeManager();
+      remembermeManager.setCipherKey(Base64.decode(cipherKey));
       remembermeManager.setCookie(cookie);
-      remembermeManager.setCipherKey(Base64.decode("odVEfs13xfPO3g3bKEvO3g=="));
       return remembermeManager;
     }
 
