@@ -29,6 +29,7 @@
 		<jedis.version>3.1.0</jedis.version>
 		<protostuff.version>1.6.0</protostuff.version>
 		<shiro.redis.version>3.2.3</shiro.redis.version>
+		<easy.captcha.version>1.6.2</easy.captcha.version>
 	</properties>
 
 	<dependencies>
@@ -134,8 +135,12 @@
 			<artifactId>commons-lang3</artifactId>
 		</dependency>
 
-
-
+		<!-- 验证码插件 -->
+		<dependency>
+			<groupId>com.github.whvcse</groupId>
+			<artifactId>easy-captcha</artifactId>
+			<version>${easy.captcha.version}</version>
+		</dependency>
 	</dependencies>
 
 	<build>
