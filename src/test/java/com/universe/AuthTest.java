@@ -6,18 +6,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.universe.common.entity.properties.ShiroProperties;
+import com.universe.service.TransactionServiceA;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class AuthTest {
 
   @Autowired
-  private ShiroProperties shiroProeperties;
+  private TransactionServiceA serviceA;
 
   @Test
-  public void userMapperTest() {
-    System.err.println(shiroProeperties);
+  public void transactionTest() {
+    serviceA.methodA();
   }
 
 }
