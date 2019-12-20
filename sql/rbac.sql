@@ -7,7 +7,7 @@ create table tbl_user
   user_id bigint primary key auto_increment comment '用户id',
   username varchar(64) comment '用户名',
   password varchar(64) comment '密码',
-  status char(1) comment '状态(0:启用,1:禁用,2:锁定)',
+  status char(1) comment '状态(0:禁用,1:启用,2:锁定)',
   salt varchar(32) comment '盐值',
   create_time datetime comment '创建时间',
   update_time datetime comment '修改时间'
@@ -15,9 +15,9 @@ create table tbl_user
 
 # 新增用户
 insert into tbl_user (user_id, username, password, salt, status, create_time, update_time)
-values (1, 'root', '0e40accdff6a29d9bae818324aee80b8', '6cb007ce3a578cc024f8024b5e9326b4', '0', now(), now());
+values (1, 'root', '0e40accdff6a29d9bae818324aee80b8', '6cb007ce3a578cc024f8024b5e9326b4', '1', now(), now());
 insert into tbl_user (user_id, username, password, salt, status, create_time, update_time)
-values (2, 'guest', '2373be683da86fc5b48ceb3312f7cc93', '9061bf91cb4e550a4857c4dfa0e75b06', '0', now(), now());
+values (2, 'guest', '2373be683da86fc5b48ceb3312f7cc93', '9061bf91cb4e550a4857c4dfa0e75b06', '1', now(), now());
 
 # 角色表
 create table tbl_role
@@ -38,33 +38,34 @@ values (2, 'user', '普通用户，只有查询权限', now(), now());
 # 资源信息表，同时包含了权限信息
 create table tbl_resource
 (
-  resource_id bigint primary key auto_increment comment '资源id',
-  parent_id bigint comment '资源父id',
+  resource_id int primary key auto_increment comment '资源id',
+  parent_id int comment '资源父id',
   resource_name varchar(32) comment '资源名称',
+  resource_code varchar(64) comment  '资源权限码',
+  resource_type char(1) comment '资源类型,1:菜单,2:按钮',
   resource_url varchar(64) comment '资源url',
   resource_icon varchar(32) comment '资源图标',
-  type char(1) comment '资源类型,1:菜单,2:按钮',
-  priority tinyint comment '资源显示顺序',
-  status char(1) comment '状态,0:启用,1:禁用',
-  permission varchar(64) comment '权限名称',
+  order tinyint comment '资源显示顺序',
+  status char(1) comment '状态,1:启用,0:禁用',
   create_time datetime comment '创建时间',
   update_time datetime comment '修改时间'
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 comment '资源信息表';
 
+# 新增用户
+insert into tbl_resource(resource_id,parent_id,resource_name,resource_code,resource_type,resource_url,resource_icon,order,status,create_time,update_time)
+values (1, 0, '系统管理', null, '1', null, null, 1, '1', now(), null);
 
-# 新增资源
-insert into tbl_resource(resource_id, parent_id, resource_name, resource_url, resource_icon, type, priority, status, permission, create_time, update_time)
-values (1, 0, '系统管理', null, null, '1', 1, '0', null, now(), now());
+insert into tbl_resource(resource_id,parent_id,resource_name,resource_code,resource_type,resource_url,resource_icon,order,status,create_time,update_time)
+values (2, 1, '用户管理', 'user:view', '1', 'system/management/user', 'layui-icon layui-icon-user', 1, '1', now(), null);
 
-insert into tbl_resource(resource_id, parent_id, resource_name, resource_url, resource_icon, type, priority, status, permission, create_time, update_time)
-values (2, 1, '用户管理', 'system/management/user', 'layui-icon layui-icon-user', '1', 1, '0', 'user:view', now(), now());
-insert into tbl_resource(resource_id, parent_id, resource_name, resource_url, resource_icon, type, priority, status, permission, create_time, update_time)
-values (3, 2, '新增用户', null, null, '2', null, '0', 'user:add', now(), now());
-insert into tbl_resource(resource_id, parent_id, resource_name, resource_url, resource_icon, type, priority, status, permission, create_time, update_time)
-values (4, 2, '删除用户', null, null, '2', null, '0', 'user:delete', now(), now());
-insert into tbl_resource(resource_id, parent_id, resource_name, resource_url, resource_icon, type, priority, status, permission, create_time, update_time)
-values (5, 2, '修改用户', null, null, '2', null, '0', 'user:update', now(), now());
+insert into tbl_resource(resource_id,parent_id,resource_name,resource_code,resource_type,resource_url,resource_icon,order,status,create_time,update_time)
+values (3, 2, '新增用户', 'user:add', '2', null, null, null, '1', now(), null);
 
+insert into tbl_resource(resource_id,parent_id,resource_name,resource_code,resource_type,resource_url,resource_icon,order,status,create_time,update_time)
+values (4, 2, '删除用户', 'user:delete', '2', null, null, null, '1', now(), null);
+
+insert into tbl_resource(resource_id,parent_id,resource_name,resource_code,resource_type,resource_url,resource_icon,order,status,create_time,update_time)
+values (5, 2, '修改用户', 'user:update', '2', null, null, null, '1' , now(), null);
 
 # 用户角色关联表
 create table tbl_user_role
@@ -111,9 +112,16 @@ values (2, 2, now());
 create table tbl_operation_log
 (
   id bigint primary key auto_increment comment '主键id',
-  op_type tinyint comment '操作类型',
+  op_type char(1) comment '操作类型',
   op_content varchar(255) comment '操作内容',
   user_id bigint comment '用户id',
   create_time datetime comment '创建时间'
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+select permission from tbl_resource tr
+		inner join tbl_role_resource trr on (trr.resource_id = tr.resource_id and tr.status = '0')
+		inner join tbl_user_role tur on tur.role_id = trr.role_id
+		inner join tbl_user tu on (tu.user_id = tur.user_id and tu.status = '0')
+		where permission is not null
+
 
