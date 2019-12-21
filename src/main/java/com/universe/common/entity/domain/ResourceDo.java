@@ -13,17 +13,17 @@ public class ResourceDo {
 
 	private String resourceName;
 
+	private String resourceCode;
+
+	private String resourceType;
+
 	private String resourceUrl;
 
 	private String resourceIcon;
 
-	private String type;
-
-	private Byte priority;
+	private Integer priority;
 
 	private String status;
-
-	private String permission;
 
 	private Date createTime;
 
@@ -53,6 +53,22 @@ public class ResourceDo {
 		this.resourceName = resourceName;
 	}
 
+	public String getResourceCode() {
+		return resourceCode;
+	}
+
+	public void setResourceCode(String resourceCode) {
+		this.resourceCode = resourceCode;
+	}
+
+	public String getResourceType() {
+		return resourceType;
+	}
+
+	public void setResourceType(String resourceType) {
+		this.resourceType = resourceType;
+	}
+
 	public String getResourceUrl() {
 		return resourceUrl;
 	}
@@ -69,19 +85,11 @@ public class ResourceDo {
 		this.resourceIcon = resourceIcon;
 	}
 
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	public Byte getPriority() {
+	public Integer getPriority() {
 		return priority;
 	}
 
-	public void setPriority(Byte priority) {
+	public void setPriority(Integer priority) {
 		this.priority = priority;
 	}
 
@@ -91,14 +99,6 @@ public class ResourceDo {
 
 	public void setStatus(String status) {
 		this.status = status;
-	}
-
-	public String getPermission() {
-		return permission;
-	}
-
-	public void setPermission(String permission) {
-		this.permission = permission;
 	}
 
 	public Date getCreateTime() {
