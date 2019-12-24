@@ -1,17 +1,8 @@
 package com.universe.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.universe.pojo.domain.ResourceDo;
 
-public interface ResourceMapper {
-    int deleteByPrimaryKey(Integer resourceId);
+public interface ResourceMapper extends BaseMapper<ResourceDo> {
 
-    int insert(ResourceDo record);
-
-    int insertSelective(ResourceDo record);
-
-    ResourceDo selectByPrimaryKey(Integer resourceId);
-
-    int updateByPrimaryKeySelective(ResourceDo record);
-
-    int updateByPrimaryKey(ResourceDo record);
 }

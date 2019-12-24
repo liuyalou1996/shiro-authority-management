@@ -1,48 +1,46 @@
 package com.universe.service.impl;
 
-import java.util.List;
-
+import com.universe.mapper.ResourceMapper;
+import com.universe.pojo.domain.ResourceDo;
+import com.universe.service.ResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.universe.mapper.ResourceDoMapper;
-import com.universe.pojo.domain.ResourceDo;
-import com.universe.service.ResourceService;
+import java.util.List;
 
 @Service
 public class ResourceServiceImpl implements ResourceService {
 
-  @Autowired
-  private ResourceDoMapper resourceMapper;
+	@Autowired
+	private ResourceMapper resourceMapper;
 
-  @Override
-  public List<ResourceDo> listResources() {
-    return resourceMapper.listResources();
-  }
+	@Override
+	public List<ResourceDo> listResources() {
+		return null;
+	}
 
-  @Override
-  public List<ResourceDo> getResourcesByUsername(String username) {
-    return resourceMapper.getResourcesByUsername(username);
-  }
+	@Override
+	public List<ResourceDo> getResourcesByUsername(String username) {
+		return null;
+	}
 
-  @Override
-  public Integer saveResource(ResourceDo resource) {
-    return resourceMapper.saveResource(resource);
-  }
+	@Override
+	public List<String> getPermissionsByUsername(String username) {
+		return null;
+	}
 
-  @Override
-  public Integer updateResource(ResourceDo resource) {
-    return resourceMapper.updateResource(resource);
-  }
+	@Override
+	public Integer saveResource(ResourceDo resource) {
+		return null;
+	}
 
-  @Override
-  public Integer removeResourceByResourceId(Integer resourceId) {
-    return resourceMapper.removeResourceByResourceId(resourceId);
-  }
+	@Override
+	public Integer updateResource(ResourceDo resource) {
+		return null;
+	}
 
-  @Override
-  public List<String> getPermissionsByUsername(String username) {
-    return resourceMapper.getPermissionsByUsername(username);
-  }
-
+	@Override
+	public Integer removeResourceByResourceId(Integer resourceId) {
+		return null;
+	}
 }

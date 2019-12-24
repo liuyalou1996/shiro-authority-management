@@ -12,57 +12,58 @@
  */
 package com.universe.pojo.domain;
 
-import java.util.Date;
-
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-/**
- * @author: liuyalou
- * @date: 2019年8月13日
- */
+import java.util.Date;
+
+@TableName("tbl_user_role")
 public class UserRoleDo {
 
-  private Integer id;
-  private Integer userId;
-  private Integer roleId;
-  private Date createTime;
+	@TableId(type = IdType.AUTO)
+	private Integer id;
+	private Integer userId;
+	private Integer roleId;
+	private Date createTime;
 
-  public Integer getId() {
-    return id;
-  }
+	public Integer getId() {
+		return id;
+	}
 
-  public Integer getUserId() {
-    return userId;
-  }
+	public Integer getUserId() {
+		return userId;
+	}
 
-  public Integer getRoleId() {
-    return roleId;
-  }
+	public Integer getRoleId() {
+		return roleId;
+	}
 
-  public Date getCreateTime() {
-    return createTime;
-  }
+	public Date getCreateTime() {
+		return createTime;
+	}
 
-  public void setId(Integer id) {
-    this.id = id;
-  }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-  public void setUserId(Integer userId) {
-    this.userId = userId;
-  }
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
 
-  public void setRoleId(Integer roleId) {
-    this.roleId = roleId;
-  }
+	public void setRoleId(Integer roleId) {
+		this.roleId = roleId;
+	}
 
-  public void setCreateTime(Date createTime) {
-    this.createTime = createTime;
-  }
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
 
-  @Override
-  public String toString() {
-    return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
-  }
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+	}
 
 }

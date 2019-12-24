@@ -1,43 +1,41 @@
 package com.universe.service.impl;
 
-import java.util.List;
-
+import com.universe.mapper.RoleMapper;
+import com.universe.pojo.domain.RoleDo;
+import com.universe.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.universe.mapper.RoleDoMapper;
-import com.universe.pojo.domain.RoleDo;
-import com.universe.service.RoleService;
+import java.util.List;
 
 @Service
 public class RoleServiceImpl implements RoleService {
 
-  @Autowired
-  private RoleDoMapper roleMapper;
+	@Autowired
+	private RoleMapper roleMapper;
 
-  @Override
-  public List<RoleDo> listRoles() {
-    return roleMapper.listRoles();
-  }
+	@Override
+	public List<RoleDo> listRoles() {
+		return null;
+	}
 
-  @Override
-  public List<RoleDo> getRolesByUsername(String username) {
-    return roleMapper.getRolesByUsername(username);
-  }
+	@Override
+	public List<RoleDo> getRolesByUsername(String username) {
+		return null;
+	}
 
-  @Override
-  public Integer saveRole(RoleDo role) {
-    return roleMapper.saveRole(role);
-  }
+	@Override
+	public Integer saveRole(RoleDo role) {
+		return null;
+	}
 
-  @Override
-  public Integer updateRole(RoleDo role) {
-    return roleMapper.updateRole(role);
-  }
+	@Override
+	public Integer updateRole(RoleDo role) {
+		return null;
+	}
 
-  @Override
-  public Integer removeRoleByRoleId(Integer roleId) {
-    return roleMapper.removeRoleByRoleId(roleId);
-  }
-
+	@Override
+	public Integer removeRoleByRoleId(Integer roleId) {
+		return null;
+	}
 }
