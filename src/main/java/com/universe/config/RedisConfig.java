@@ -16,7 +16,6 @@ public class RedisConfig {
 	@Bean
 	public JedisPool jedisPool() {
 		JedisPoolConfig poolConfig = (JedisPoolConfig) jedisConnectionFactory.getPoolConfig();
-		System.err.println(poolConfig);
 		String host = jedisConnectionFactory.getHostName();
 		int port = jedisConnectionFactory.getPort();
 		int timeout = jedisConnectionFactory.getTimeout();

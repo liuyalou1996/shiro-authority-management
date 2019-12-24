@@ -45,27 +45,30 @@ create table tbl_resource
   resource_type char(1) comment '资源类型,1:菜单,2:按钮',
   resource_url varchar(64) comment '资源url',
   resource_icon varchar(32) comment '资源图标',
-  order tinyint comment '资源显示顺序',
+  resource_order tinyint comment '资源显示顺序',
   status char(1) comment '状态,1:启用,0:禁用',
   create_time datetime comment '创建时间',
   update_time datetime comment '修改时间'
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 comment '资源信息表';
 
 # 新增用户
-insert into tbl_resource(resource_id,parent_id,resource_name,resource_code,resource_type,resource_url,resource_icon,order,status,create_time,update_time)
-values (1, 0, '系统管理', null, '1', null, null, 1, '1', now(), null);
+insert into tbl_resource(resource_id,parent_id,resource_name,resource_code,resource_type,resource_url,resource_icon,resource_order,status,create_time,update_time)
+values (1, 0, '系统管理', 'system:management', '1', null, null, 1, '1', now(), null);
 
-insert into tbl_resource(resource_id,parent_id,resource_name,resource_code,resource_type,resource_url,resource_icon,order,status,create_time,update_time)
-values (2, 1, '用户管理', 'user:view', '1', 'system/management/user', 'layui-icon layui-icon-user', 1, '1', now(), null);
+insert into tbl_resource(resource_id,parent_id,resource_name,resource_code,resource_type,resource_url,resource_icon,resource_order,status,create_time,update_time)
+values (2, 1, '用户管理', 'user:management', '1', 'system/management/user', 'layui-icon layui-icon-user', 1, '1', now(), null);
 
-insert into tbl_resource(resource_id,parent_id,resource_name,resource_code,resource_type,resource_url,resource_icon,order,status,create_time,update_time)
+insert into tbl_resource(resource_id,parent_id,resource_name,resource_code,resource_type,resource_url,resource_icon,resource_order,status,create_time,update_time)
 values (3, 2, '新增用户', 'user:add', '2', null, null, null, '1', now(), null);
 
-insert into tbl_resource(resource_id,parent_id,resource_name,resource_code,resource_type,resource_url,resource_icon,order,status,create_time,update_time)
+insert into tbl_resource(resource_id,parent_id,resource_name,resource_code,resource_type,resource_url,resource_icon,resource_order,status,create_time,update_time)
 values (4, 2, '删除用户', 'user:delete', '2', null, null, null, '1', now(), null);
 
-insert into tbl_resource(resource_id,parent_id,resource_name,resource_code,resource_type,resource_url,resource_icon,order,status,create_time,update_time)
+insert into tbl_resource(resource_id,parent_id,resource_name,resource_code,resource_type,resource_url,resource_icon,resource_order,status,create_time,update_time)
 values (5, 2, '修改用户', 'user:update', '2', null, null, null, '1' , now(), null);
+
+insert into tbl_resource(resource_id,parent_id,resource_name,resource_code,resource_type,resource_url,resource_icon,resource_order,status,create_time,update_time)
+values (6, 2, '查询用户', 'user:view', '2', null, null, null, '1' , now(), null);
 
 # 用户角色关联表
 create table tbl_user_role
@@ -79,6 +82,8 @@ create table tbl_user_role
 # 用户角色映射
 insert into tbl_user_role(user_id, role_id, create_time)
 values(1,1,now());
+insert into tbl_user_role(user_id, role_id, create_time)
+values(2,2,now());
 
 # 角色资源关联表
 create table tbl_role_resource
@@ -118,10 +123,15 @@ create table tbl_operation_log
   create_time datetime comment '创建时间'
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-select permission from tbl_resource tr
-		inner join tbl_role_resource trr on (trr.resource_id = tr.resource_id and tr.status = '0')
-		inner join tbl_user_role tur on tur.role_id = trr.role_id
-		inner join tbl_user tu on (tu.user_id = tur.user_id and tu.status = '0')
-		where permission is not null
+# 根据用户名获取权限
+select * from tbl_resource tr
+inner join tbl_role_resource trr on trr.resource_id = tr.resource_id
+inner join tbl_user_role tur on tur.role_id = trr.role_id
+inner join tbl_user tu on tu.user_id = tur.user_id
+where tu.username = 'guest';
 
-
+# 根据用户名获取角色
+select * from tbl_role tr
+inner join tbl_user_role tur on tur.role_id = tr.role_id
+inner join tbl_user tu on tu.user_id = tur.user_id
+where tu.username = 'guest';

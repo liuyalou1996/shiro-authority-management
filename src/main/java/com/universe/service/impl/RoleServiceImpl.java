@@ -26,16 +26,16 @@ public class RoleServiceImpl implements RoleService {
 
 	@Override
 	public Integer saveRole(RoleDo role) {
-		return null;
+		return roleMapper.insert(role);
 	}
 
 	@Override
 	public Integer updateRole(RoleDo role) {
-		return null;
+		return roleMapper.updateById(role);
 	}
 
 	@Override
 	public Integer removeRoleByRoleId(Integer roleId) {
-		return null;
+		return roleMapper.deleteById(roleId);
 	}
 }
