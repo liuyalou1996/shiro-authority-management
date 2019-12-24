@@ -2,7 +2,7 @@ package com.universe.service;
 
 import java.util.List;
 
-import com.universe.common.entity.domain.UserDo;
+import com.universe.pojo.domain.UserDo;
 
 public interface UserService {
 

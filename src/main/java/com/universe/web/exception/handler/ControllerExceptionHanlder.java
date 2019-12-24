@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.universe.common.entity.dto.GenericResponseDto;
+import com.universe.pojo.dto.GenericResponseDto;
 
 /**
  * 主要处理Shiro相关的授权异常

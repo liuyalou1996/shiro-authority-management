@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.universe.common.entity.dto.GenericResponseDto;
+import com.universe.pojo.dto.GenericResponseDto;
 
 @Controller
 public class LoginController {

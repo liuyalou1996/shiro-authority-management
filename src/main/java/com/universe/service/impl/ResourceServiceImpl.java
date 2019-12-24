@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.universe.common.entity.domain.ResourceDo;
 import com.universe.mapper.ResourceDoMapper;
+import com.universe.pojo.domain.ResourceDo;
 import com.universe.service.ResourceService;
 
 @Service

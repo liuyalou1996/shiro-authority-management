@@ -10,7 +10,7 @@
  * in accordance with the terms of the contract agreement
  * you entered into with iBoxchain inc.
  */
-package com.universe.common.entity.properties;
+package com.universe.pojo.properties;
 
 import java.util.Arrays;
 import java.util.Collections;

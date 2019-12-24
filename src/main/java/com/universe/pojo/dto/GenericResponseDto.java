@@ -1,4 +1,4 @@
-package com.universe.common.entity.dto;
+package com.universe.pojo.dto;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;

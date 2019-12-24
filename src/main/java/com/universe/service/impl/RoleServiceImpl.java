@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.universe.common.entity.domain.RoleDo;
 import com.universe.mapper.RoleDoMapper;
+import com.universe.pojo.domain.RoleDo;
 import com.universe.service.RoleService;
 
 @Service

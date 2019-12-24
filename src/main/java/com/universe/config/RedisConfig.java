@@ -6,9 +6,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
-import com.universe.common.entity.properties.RedisProperties;
-import com.universe.common.entity.properties.RedisProperties.ConnectionPoolProperties;
-import com.universe.common.entity.properties.RedisProperties.ServerProperties;
+import com.universe.pojo.properties.RedisProperties;
+import com.universe.pojo.properties.RedisProperties.ConnectionPoolProperties;
+import com.universe.pojo.properties.RedisProperties.ServerProperties;
 
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;

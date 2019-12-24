@@ -10,7 +10,7 @@
  * in accordance with the terms of the contract agreement
  * you entered into with iBoxchain inc.
  */
-package com.universe.common.entity.domain;
+package com.universe.pojo.domain;
 
 import java.util.Date;
 

@@ -21,8 +21,8 @@ import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.universe.common.emuneration.UserStatus;
-import com.universe.common.entity.domain.RoleDo;
-import com.universe.common.entity.domain.UserDo;
+import com.universe.pojo.domain.RoleDo;
+import com.universe.pojo.domain.UserDo;
 import com.universe.service.ResourceService;
 import com.universe.service.RoleService;
 import com.universe.service.UserService;

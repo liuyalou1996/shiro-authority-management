@@ -6,9 +6,9 @@ import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.universe.common.entity.domain.UserDo;
 import com.universe.common.util.PasswordGenerationUtils;
 import com.universe.mapper.UserDoMapper;
+import com.universe.pojo.domain.UserDo;
 import com.universe.service.UserService;
 
 @Service

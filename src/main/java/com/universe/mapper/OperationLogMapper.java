@@ -1,6 +1,6 @@
 package com.universe.mapper;
 
-import com.universe.common.entity.domain.OperationLogDo;
+import com.universe.pojo.domain.OperationLogDo;
 
 public interface OperationLogMapper {
 

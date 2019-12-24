@@ -1,4 +1,4 @@
-package com.universe.common.entity.domain;
+package com.universe.pojo.domain;
 
 import java.util.Date;
 

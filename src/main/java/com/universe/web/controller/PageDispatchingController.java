@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.universe.common.entity.dto.GenericResponseDto;
+import com.universe.pojo.dto.GenericResponseDto;
 
 /**
  * 页面跳转控制器

@@ -27,9 +27,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.PropertySource;
 
-import com.universe.common.entity.properties.ShiroProperties;
 import com.universe.common.util.PasswordGenerationUtils;
 import com.universe.config.shiro.realm.ShiroJdbcRealm;
+import com.universe.pojo.properties.ShiroProperties;
 
 import redis.clients.jedis.JedisPool;
 

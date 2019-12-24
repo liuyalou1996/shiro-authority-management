@@ -2,7 +2,7 @@ package com.universe.service;
 
 import java.util.List;
 
-import com.universe.common.entity.domain.RoleDo;
+import com.universe.pojo.domain.RoleDo;
 
 public interface RoleService {
 
