@@ -10,6 +10,9 @@ import redis.clients.jedis.JedisPoolConfig;
 @Configuration
 public class RedisConfig {
 
+	/**
+	 * 自动配置时会注入到容器中
+	 */
 	@Autowired
 	private JedisConnectionFactory jedisConnectionFactory;
 

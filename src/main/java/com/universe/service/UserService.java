@@ -1,18 +1,17 @@
 package com.universe.service;
 
-import java.util.List;
-
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.universe.pojo.domain.UserDo;
 
 public interface UserService {
 
-  List<UserDo> listUsers();
+	Page<UserDo> listUsers(int pageNum, int pageSize, String username);
 
-  UserDo getUserByUsername(String username);
+	UserDo getUserByUsername(String username);
 
-  Integer saveUser(UserDo user);
+	boolean saveUser(UserDo user);
 
-  Integer updateUser(UserDo user);
+	boolean updateUserByUserId(UserDo user);
 
-  Integer removeUserByUserId(Integer userId);
+	boolean removeUserByUserId(long userId);
 }

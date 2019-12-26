@@ -1,19 +1,20 @@
 package com.universe.service;
 
-import java.util.List;
-
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.universe.pojo.domain.RoleDo;
+
+import java.util.List;
 
 public interface RoleService {
 
-  List<RoleDo> listRoles();
+	IPage<RoleDo> listRoles();
 
-  List<RoleDo> getRolesByUsername(String username);
+	List<String> getRolesByUsername(String username);
 
-  Integer saveRole(RoleDo role);
+	boolean saveRole(RoleDo role);
 
-  Integer updateRole(RoleDo role);
+	boolean updateRoleByRoleId(RoleDo role);
 
-  Integer removeRoleByRoleId(Integer roleId);
+	boolean removeRoleByRoleId(int roleId);
 
 }

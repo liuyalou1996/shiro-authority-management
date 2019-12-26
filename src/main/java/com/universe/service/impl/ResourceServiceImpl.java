@@ -1,5 +1,7 @@
 package com.universe.service.impl;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.universe.mapper.ResourceMapper;
 import com.universe.pojo.domain.ResourceDo;
 import com.universe.service.ResourceService;
@@ -9,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ResourceServiceImpl implements ResourceService {
+public class ResourceServiceImpl extends ServiceImpl<BaseMapper<ResourceDo>, ResourceDo> implements ResourceService {
 
 	@Autowired
 	private ResourceMapper resourceMapper;
@@ -20,27 +22,22 @@ public class ResourceServiceImpl implements ResourceService {
 	}
 
 	@Override
-	public List<ResourceDo> getResourcesByUsername(String username) {
-		return null;
+	public List<String> getResourceCodeByUsername(String username) {
+		return resourceMapper.getResourceCodeByUsername(username);
 	}
 
 	@Override
-	public List<String> getPermissionsByUsername(String username) {
-		return null;
+	public boolean saveResource(ResourceDo resource) {
+		return super.save(resource);
 	}
 
 	@Override
-	public Integer saveResource(ResourceDo resource) {
-		return null;
+	public boolean updateResourceByResourceId(ResourceDo resource) {
+		return super.updateById(resource);
 	}
 
 	@Override
-	public Integer updateResource(ResourceDo resource) {
-		return null;
-	}
-
-	@Override
-	public Integer removeResourceByResourceId(Integer resourceId) {
-		return null;
+	public boolean removeResourceByResourceId(Integer resourceId) {
+		return super.removeById(resourceId);
 	}
 }

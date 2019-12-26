@@ -1,20 +1,18 @@
 package com.universe.service;
 
-import java.util.List;
-
 import com.universe.pojo.domain.ResourceDo;
+
+import java.util.List;
 
 public interface ResourceService {
 
-  List<ResourceDo> listResources();
+	List<ResourceDo> listResources();
 
-  List<ResourceDo> getResourcesByUsername(String username);
+	List<String> getResourceCodeByUsername(String username);
 
-  List<String> getPermissionsByUsername(String username);
+	boolean saveResource(ResourceDo resource);
 
-  Integer saveResource(ResourceDo resource);
+	boolean updateResourceByResourceId(ResourceDo resource);
 
-  Integer updateResource(ResourceDo resource);
-
-  Integer removeResourceByResourceId(Integer resourceId);
+	boolean removeResourceByResourceId(Integer resourceId);
 }

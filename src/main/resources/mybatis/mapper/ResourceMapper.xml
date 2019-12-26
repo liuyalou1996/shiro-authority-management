@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.universe.mapper.ResourceMapper">
-
+    <select id="getResourceCodeByUsername" parameterType="string" resultType="string">
+        select tr.resource_code from tbl_resource tr
+        inner join tbl_role_resource trr on trr.resource_id = tr.resource_id
+        inner join tbl_user_role tur on tur.role_id = trr.role_id
+        inner join tbl_user tu on tu.user_id = tur.user_id
+        where tu.username = #{username}
+    </select>
 </mapper>

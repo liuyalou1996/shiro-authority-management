@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface RoleMapper extends BaseMapper<RoleDo> {
 
-	List<RoleDo> getRolesByUsername(String username);
+	List<String> getRolesByUsername(String username);
 }

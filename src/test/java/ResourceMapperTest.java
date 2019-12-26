@@ -3,7 +3,6 @@ import com.universe.Application;
 import com.universe.mapper.ResourceMapper;
 import com.universe.mapper.RoleMapper;
 import com.universe.pojo.domain.ResourceDo;
-import com.universe.pojo.domain.RoleDo;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +29,7 @@ public class ResourceMapperTest {
 
 	@Test
 	public void getRolesByUsername() {
-		List<RoleDo> roles = roleMapper.getRolesByUsername("root");
+		List<String> roles = roleMapper.getRolesByUsername("root");
 		System.err.println(roles);
 	}
 }

@@ -1,7 +1,6 @@
 package com.universe.config.shiro.realm;
 
 import com.universe.common.emuneration.UserStatusEnum;
-import com.universe.pojo.domain.RoleDo;
 import com.universe.pojo.domain.UserDo;
 import com.universe.service.ResourceService;
 import com.universe.service.RoleService;
@@ -64,11 +63,9 @@ public class ShiroJdbcRealm extends AuthorizingRealm {
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		String username = (String) principals.getPrimaryPrincipal();
-		List<RoleDo> roleList = roleService.getRolesByUsername(username);
-		List<String> permissionList = resourceService.getPermissionsByUsername(username);
-
-		Set<String> roleSet = new HashSet<String>();
-		roleList.forEach(role -> roleSet.add(role.getRoleName()));
+		List<String> roleList = roleService.getRolesByUsername(username);
+		List<String> permissionList = resourceService.getResourceCodeByUsername(username);
+		Set<String> roleSet = new HashSet<String>(roleList);
 		Set<String> permissionSet = new HashSet<>(permissionList);
 
 		SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
