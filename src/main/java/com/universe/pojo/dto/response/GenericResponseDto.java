@@ -5,15 +5,15 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 public class GenericResponseDto<T> {
 
-	private Integer resultCode;
+	private int resultCode;
 	private String resultDesc;
 	private T content;
 
-	public Integer getResultCode() {
+	public int getResultCode() {
 		return resultCode;
 	}
 
-	public void setResultCode(Integer resultCode) {
+	public void setResultCode(int resultCode) {
 		this.resultCode = resultCode;
 	}
 
@@ -31,6 +31,35 @@ public class GenericResponseDto<T> {
 
 	public void setContent(T content) {
 		this.content = content;
+	}
+
+	public static <T> Builder<T> builder() {
+		return new Builder<>();
+	}
+
+	public static class Builder<T> {
+
+		private GenericResponseDto<T> response = new GenericResponseDto<>();
+
+		public Builder<T> resultCode(int resultCode) {
+			response.setResultCode(resultCode);
+			return this;
+		}
+
+		public Builder<T> resultDesc(String resultDesc) {
+			response.setResultDesc(resultDesc);
+			return this;
+		}
+
+		public Builder<T> content(T content) {
+			response.setContent(content);
+			return this;
+		}
+
+		public GenericResponseDto<T> build() {
+			return response;
+		}
+
 	}
 
 	@Override

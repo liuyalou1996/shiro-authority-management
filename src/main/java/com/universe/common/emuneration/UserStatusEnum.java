@@ -3,11 +3,11 @@ package com.universe.common.emuneration;
 public enum UserStatusEnum {
 
 	/**
-	 * 正常
+	 * 禁用
 	 */
 	NORMAL("0"),
 	/**
-	 * 禁用
+	 * 启用
 	 */
 	FORBIDDEN("1"),
 	/**

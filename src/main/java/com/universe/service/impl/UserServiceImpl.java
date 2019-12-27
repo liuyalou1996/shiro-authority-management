@@ -10,6 +10,7 @@ import com.universe.pojo.domain.UserDo;
 import com.universe.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,6 +18,9 @@ public class UserServiceImpl extends ServiceImpl<BaseMapper<UserDo>, UserDo> imp
 
 	@Autowired
 	private UserMapper userMapper;
+
+	@Autowired
+	private StringRedisTemplate redisTemplate;
 
 	@Override
 	public Page<UserDo> listUsers(int pageNum, int pageSize, String username) {

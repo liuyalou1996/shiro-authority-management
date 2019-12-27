@@ -8,19 +8,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.universe.pojo.dto.response.GenericResponseDto;
 
 /**
- * 主要处理Shiro相关的授权异常
- * @author: liuyalou
- * @date: 2019年8月20日
+ * 统一异常处理
+ * @author 刘亚楼
+ * @date 2019/12/27
  */
 @ControllerAdvice
 public class ControllerExceptionHanlder {
 
-  @ExceptionHandler(ShiroException.class)
-  @ResponseBody
-  public GenericResponseDto handleControllerException(ShiroException exception) {
-    GenericResponseDto response = new GenericResponseDto();
-    response.setResultCode(1);
-    response.setResultDesc(exception.getMessage());
-    return response;
-  }
+	@ExceptionHandler(ShiroException.class)
+	@ResponseBody
+	public GenericResponseDto<?> handleControllerException(ShiroException exception) {
+		return GenericResponseDto.builder()
+      .resultCode(0)
+      .resultDesc(exception.getMessage())
+      .build();
+	}
 }

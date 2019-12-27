@@ -14,4 +14,5 @@ public interface UserService {
 	boolean updateUserByUserId(UserDo user);
 
 	boolean removeUserByUserId(long userId);
+
 }

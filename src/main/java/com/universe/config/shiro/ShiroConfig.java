@@ -12,6 +12,7 @@ import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.filter.mgt.DefaultFilter;
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.servlet.Cookie;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.crazycake.shiro.RedisCacheManager;
@@ -99,6 +100,9 @@ public class ShiroConfig {
 			DefaultWebSessionManager sessionManger = new DefaultWebSessionManager();
 			sessionManger.setSessionDAO(redisSessionDAO);
 			sessionManger.setGlobalSessionTimeout(shiroProperties.getSessionTimeout() * 1000);
+			Cookie cookie = new SimpleCookie("SHIROID");
+			cookie.setHttpOnly(true);
+			sessionManger.setSessionIdCookie(cookie);
 			return sessionManger;
 		}
 
@@ -115,7 +119,8 @@ public class ShiroConfig {
 		}
 
 		@Bean
-		public SecurityManager securityManager(ShiroJdbcRealm shiroJdbcRealm, RedisCacheManager redisCacheManager,
+		public SecurityManager securityManager(ShiroJdbcRealm shiroJdbcRealm,
+																					 RedisCacheManager redisCacheManager,
 																					 DefaultWebSessionManager defaultWebSessoinManager,
 																					 CookieRememberMeManager remembermeManager) {
 			DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
