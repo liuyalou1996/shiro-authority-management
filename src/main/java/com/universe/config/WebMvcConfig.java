@@ -44,7 +44,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 		List<MediaType> mediaTypesList = new ArrayList<>();
 		mediaTypesList.add(new MediaType("text", "html", StandardCharsets.UTF_8));
 		mediaTypesList.add(new MediaType("application", "*+json", StandardCharsets.UTF_8));
-		mediaTypesList.add(MediaType.APPLICATION_JSON_UTF8);
+		mediaTypesList.add(MediaType.APPLICATION_JSON);
 		fastJsonHttpMessageConverter.setSupportedMediaTypes(mediaTypesList);
 
 		FastJsonConfig fastJsonConfig = new FastJsonConfig();
@@ -57,7 +57,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		// 静态资源特殊处理
-		registry.addResourceHandler("/static-resources/images/**")
+		registry.addResourceHandler("/static-resources/**")
 						.addResourceLocations("classpath:/static/resources/");
 	}
 
@@ -92,6 +92,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 		viewResolver.setCharacterEncoding("UTF-8");
 		viewResolver.setContentType(MediaType.TEXT_HTML_VALUE);
 		viewResolver.setOrder(Ordered.LOWEST_PRECEDENCE - 5);
+		viewResolver.setCache(false);
 		return viewResolver;
 	}
 

@@ -2,9 +2,6 @@ package com.universe.web.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.universe.pojo.dto.response.GenericResponseDto;
 
 /**
  * 页面跳转控制器
@@ -12,19 +9,32 @@ import com.universe.pojo.dto.response.GenericResponseDto;
  * @date: 2019年8月16日
  */
 @Controller
+@RequestMapping("/page")
 public class PageDispatchingController {
 
-  @RequestMapping("/auth/login")
-  public String dispatchToLoginPage() {
-    return "login";
-  }
+	@Controller
+	@RequestMapping("/anon")
+	static class AnonymousController {
 
-  @RequestMapping("/unauthorized")
-  @ResponseBody
-  public String dispatchToUnauthrorizedPage() {
-    GenericResponseDto response = new GenericResponseDto();
-    response.setResultCode(401);
-    response.setResultDesc("无权限访问");
-    return "unauthorized";
-  }
+		@RequestMapping("/login")
+		public String dispatchToLoginPage() {
+			return "login";
+		}
+
+		@RequestMapping("/unauthorized")
+		public String dispatchToUnauthrorizedPage() {
+			return "unauthorized";
+		}
+	}
+
+	@Controller
+	@RequestMapping("/auth")
+	static class AuthPassController {
+
+		@RequestMapping("/index")
+		public String dispatchToUnauthrorizedPage() {
+			return "index";
+		}
+	}
+
 }
