@@ -14,6 +14,6 @@ public class AnonPageDispatchController {
 
 	@RequestMapping("/login")
 	public String dispatchToLoginPage() {
-		return "login";
+		return "page/login";
 	}
 }

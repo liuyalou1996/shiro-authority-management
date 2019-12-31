@@ -17,7 +17,7 @@ public class AuthPageDispatchController {
 	@RequiresPermissions(Permissions.Page.INDEX_PAGE_VIEW)
 	@RequestMapping("/index")
 	public String dispatchToIndexPage() {
-		return "index";
+		return "page/index";
 	}
 
 }

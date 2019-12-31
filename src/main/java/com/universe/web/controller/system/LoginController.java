@@ -1,9 +1,9 @@
-package com.universe.web.controller;
+package com.universe.web.controller.system;
 
 import com.alibaba.druid.util.StringUtils;
 import com.universe.common.util.ShiroUtils;
 import com.universe.pojo.dto.request.LoginRequestDto;
-import com.universe.pojo.dto.response.GenericResponseDto;
+import com.universe.pojo.dto.response.GenericRespDto;
 import com.wf.captcha.ArithmeticCaptcha;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authc.pam.UnsupportedTokenException;
@@ -22,7 +22,7 @@ public class LoginController {
 	private static final String CAPTCHA_KEY = "captcha";
 
 	@PostMapping(value = "/auth/login", produces = MediaType.APPLICATION_JSON_VALUE)
-	public GenericResponseDto<?> login(LoginRequestDto requestDto) {
+	public GenericRespDto<?> login(LoginRequestDto requestDto) {
 		String username = requestDto.getUsername();
 		String password = requestDto.getPassword();
 		boolean rememberMe = requestDto.isRemembered();
@@ -38,16 +38,16 @@ public class LoginController {
 		subject.login(token);
 		// 登录成功后去除验证码
 		ShiroUtils.removeSessionAttribute(CAPTCHA_KEY);
-		return GenericResponseDto.builder().resultCode(1).build();
+		return GenericRespDto.builder().resultCode(1).build();
 	}
 
 	@GetMapping(value = "/auth/captcha", produces = MediaType.APPLICATION_JSON_VALUE)
-	public GenericResponseDto<String> generateVerifyCode() {
+	public GenericRespDto<String> generateVerifyCode() {
 		ArithmeticCaptcha captcha = new ArithmeticCaptcha(130, 50,2);
 		Session session = ShiroUtils.getSession();
 		ShiroUtils.setSessionAttribute(CAPTCHA_KEY, captcha.text());
 
-		return GenericResponseDto.<String>builder()
+		return GenericRespDto.<String>builder()
 			.resultCode(1)
 			.content(captcha.toBase64())
 			.build();

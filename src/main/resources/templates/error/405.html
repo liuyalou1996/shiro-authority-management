@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>404</title>
+    <title>405</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta http-equiv="Access-Control-Allow-Origin" content="*">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -67,7 +67,7 @@
                     <span class="triangle"></span>
                 </div>
             </div>
-            <h2 class="h1">很抱歉，你访问的页面找不到了</h2>
+            <h2 class="h1">不好意思，该类型的请求不支持哦</h2>
         </div>
     </div>
 </div>
@@ -99,7 +99,7 @@
     loop1 = setInterval(function () {
         if (i > 100) {
             clearInterval(loop1);
-            document.querySelector('.firstDigit').textContent = 4;
+            document.querySelector('.firstDigit').textContent = 5;
         } else {
             document.querySelector('.firstDigit').textContent = randomNum();
             i++;

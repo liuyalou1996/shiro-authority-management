@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.universe.pojo.dto.response.GenericResponseDto;
+import com.universe.pojo.dto.response.GenericRespDto;
 
 /**
  * 统一异常处理
@@ -17,8 +17,8 @@ public class ControllerExceptionHanlder {
 
 	@ExceptionHandler(ShiroException.class)
 	@ResponseBody
-	public GenericResponseDto<?> handleControllerException(ShiroException exception) {
-		return GenericResponseDto.builder()
+	public GenericRespDto<?> handleControllerException(ShiroException exception) {
+		return GenericRespDto.builder()
 			.resultCode(0)
 			.resultDesc(exception.getMessage())
 			.build();

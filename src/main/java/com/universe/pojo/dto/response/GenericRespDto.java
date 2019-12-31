@@ -3,7 +3,7 @@ package com.universe.pojo.dto.response;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-public class GenericResponseDto<T> {
+public class GenericRespDto<T> {
 
 	private int resultCode;
 	private String resultDesc;
@@ -39,7 +39,7 @@ public class GenericResponseDto<T> {
 
 	public static class Builder<T> {
 
-		private GenericResponseDto<T> response = new GenericResponseDto<>();
+		private GenericRespDto<T> response = new GenericRespDto<>();
 
 		public Builder<T> resultCode(int resultCode) {
 			response.setResultCode(resultCode);
@@ -56,7 +56,7 @@ public class GenericResponseDto<T> {
 			return this;
 		}
 
-		public GenericResponseDto<T> build() {
+		public GenericRespDto<T> build() {
 			return response;
 		}
 

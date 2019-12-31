@@ -1,8 +1,8 @@
-package com.universe.web.controller;
+package com.universe.web.controller.system;
 
 import com.universe.common.constant.Permissions;
 import com.universe.pojo.domain.UserDo;
-import com.universe.pojo.dto.response.GenericResponseDto;
+import com.universe.pojo.dto.response.GenericRespDto;
 import com.universe.service.UserService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ public class UserController {
 	@PostMapping("/add")
 	@ResponseBody
 	@RequiresPermissions(Permissions.User.USER_ADD)
-	public GenericResponseDto<?> addUser(@RequestBody UserDo user) {
+	public GenericRespDto<?> addUser(@RequestBody UserDo user) {
 		return null;
 	}
 
