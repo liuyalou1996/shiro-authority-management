@@ -23,7 +23,7 @@ function refreshVerifyCodeOnImageClick() {
 function initVerifyCode() {
     $.ajax({
         method: 'get',
-        url: '/api/auth/verify-code',
+        url: '/api/auth/captcha',
         dataType: 'json',
         success: function (resp) {
             if (resp.resultCode == 1) {
@@ -54,25 +54,28 @@ function addListenerOnLogin() {
                 layer.msg('密码不能为空');
                 return false;
             }
-            if (fields.captcha == '') {
+            if (fields.verifyCode == '') {
                 layer.msg('验证码不能为空');
                 return false;
             }
 
-            login();
+            login(fields, layer);
             return false;
         });
     });
 }
 
-function login() {
+function login(fields, layer) {
     $.ajax({
         method: 'post',
         url: '/api/auth/login',
+        data: fields,
         dataType: 'json',
         success: function (resp) {
             if (resp.resultCode == 1) {
-                window.location.href = '/page/anon/index';
+                window.location.href = '/page/auth/index';
+            } else {
+                layer.msg(resp.resultDesc);
             }
         }
     });

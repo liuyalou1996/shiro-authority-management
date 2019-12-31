@@ -19,7 +19,7 @@ public class ControllerExceptionHanlder {
 	@ResponseBody
 	public GenericResponseDto<?> handleControllerException(ShiroException exception) {
 		return GenericResponseDto.builder()
-			.resultCode(1)
+			.resultCode(0)
 			.resultDesc(exception.getMessage())
 			.build();
 	}

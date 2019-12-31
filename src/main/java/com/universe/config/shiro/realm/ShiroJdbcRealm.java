@@ -41,7 +41,7 @@ public class ShiroJdbcRealm extends AuthorizingRealm {
 		String loginUsername = ((UsernamePasswordToken) authToken).getUsername();
 		UserDo user = userService.getUserByUsername(loginUsername);
 		if (user == null) {
-			throw new UnknownAccountException("用户不存在!");
+			throw new UnknownAccountException("账号不存在!");
 		}
 
 		String userStatus = user.getStatus();

@@ -21,7 +21,7 @@ public class UserController {
 
 	@PostMapping("/add")
 	@ResponseBody
-	@RequiresPermissions(Permissions.UserPermissions.USER_ADD)
+	@RequiresPermissions(Permissions.User.USER_ADD)
 	public GenericResponseDto<?> addUser(@RequestBody UserDo user) {
 		return null;
 	}

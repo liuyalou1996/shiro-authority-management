@@ -5,11 +5,11 @@ public enum UserStatusEnum {
 	/**
 	 * 禁用
 	 */
-	NORMAL("0"),
+	FORBIDDEN("0"),
 	/**
 	 * 启用
 	 */
-	FORBIDDEN("1"),
+	NORMAL("1"),
 	/**
 	 * 锁定
 	 */

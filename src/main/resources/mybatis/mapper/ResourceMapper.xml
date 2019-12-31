@@ -6,6 +6,6 @@
         inner join tbl_role_resource trr on trr.resource_id = tr.resource_id
         inner join tbl_user_role tur on tur.role_id = trr.role_id
         inner join tbl_user tu on tu.user_id = tur.user_id
-        where tu.username = #{username}
+        where tr.resource_code is not null and tu.username = #{username}
     </select>
 </mapper>

@@ -1,51 +1,56 @@
 package com.universe.web.controller;
 
 import com.alibaba.druid.util.StringUtils;
+import com.universe.common.util.ShiroUtils;
+import com.universe.pojo.dto.request.LoginRequestDto;
 import com.universe.pojo.dto.response.GenericResponseDto;
-import com.wf.captcha.SpecCaptcha;
-import org.apache.shiro.SecurityUtils;
+import com.wf.captcha.ArithmeticCaptcha;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authc.pam.UnsupportedTokenException;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 @RequestMapping("/api")
 public class LoginController {
 
-	@Autowired
-	private StringRedisTemplate stringRedisTemplate;
+	private static final String CAPTCHA_KEY = "captcha";
 
 	@PostMapping(value = "/auth/login", produces = MediaType.APPLICATION_JSON_VALUE)
-	public GenericResponseDto<?> login(String username, String password, String verifyCode, boolean rememberMe) {
+	public GenericResponseDto<?> login(LoginRequestDto requestDto) {
+		String username = requestDto.getUsername();
+		String password = requestDto.getPassword();
+		boolean rememberMe = requestDto.isRemembered();
+		String captcha = requestDto.getCaptcha();
 		UsernamePasswordToken token = new UsernamePasswordToken(username, password, rememberMe);
-		Subject subject = SecurityUtils.getSubject();
-		String realVerifyCode = (String) subject.getSession().getAttribute("verifyCode");
-		if (!StringUtils.equalsIgnoreCase(verifyCode, realVerifyCode)) {
+
+		Subject subject = ShiroUtils.getSubject();
+		String realCaptcha = ShiroUtils.getSessionAttribute(CAPTCHA_KEY, String.class);
+		if (!StringUtils.equalsIgnoreCase(captcha, realCaptcha)) {
 			throw new UnsupportedTokenException("验证码错误!");
 		}
 
 		subject.login(token);
+		// 登录成功后去除验证码
+		ShiroUtils.removeSessionAttribute(CAPTCHA_KEY);
 		return GenericResponseDto.builder().resultCode(1).build();
 	}
 
-	@ResponseBody
-	@GetMapping(value = "/auth/verify-code", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/auth/captcha", produces = MediaType.APPLICATION_JSON_VALUE)
 	public GenericResponseDto<String> generateVerifyCode() {
-		Session session = SecurityUtils.getSubject().getSession();
-		SpecCaptcha specCaptcha = new SpecCaptcha(130, 50, 5);
-		session.setAttribute("verifyCode", specCaptcha.text().toLowerCase());
+		ArithmeticCaptcha captcha = new ArithmeticCaptcha(130, 50,2);
+		Session session = ShiroUtils.getSession();
+		ShiroUtils.setSessionAttribute(CAPTCHA_KEY, captcha.text());
 
-		String verifyCode = specCaptcha.toBase64();
-		return GenericResponseDto.<String>builder().resultCode(1).content(verifyCode).build();
+		return GenericResponseDto.<String>builder()
+			.resultCode(1)
+			.content(captcha.toBase64())
+			.build();
 	}
 
 }
