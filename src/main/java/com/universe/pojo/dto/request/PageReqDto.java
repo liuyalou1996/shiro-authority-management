@@ -7,7 +7,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.util.List;
 
-public class PageRequestDto<T> {
+public class PageReqDto<T> {
 
 	private int pageNum;
 

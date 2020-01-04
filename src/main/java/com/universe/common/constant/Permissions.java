@@ -14,4 +14,9 @@ public interface Permissions {
 		String USER_UPDATE = "system:user:update";
 		String USER_VIEW = "system:user:view";
 	}
+
+	interface Resosurce {
+
+		String RESOURCE_MENU_FETCH = "system:resource:menu:fetch";
+	}
 }

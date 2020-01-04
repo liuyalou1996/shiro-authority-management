@@ -30,22 +30,36 @@ public class ResourceServiceImpl extends ServiceImpl<BaseMapper<ResourceDo>, Res
 		return resourceMapper.getResourceCodeByUsername(username);
 	}
 
-	public void getMenuByUsername(String username) {
+	@Override
+	public List<MenuInfoRespDto> getMenuByUsername(String username) {
 		List<ResourceDo> resourceList = resourceMapper.getMenuByUsername(username);
 		Map<Integer, List<ResourceDo>> resourceMap = resourceList.stream().collect(Collectors.groupingBy(ResourceDo::getParentId));
-		// 顶级资源列表，即目录
+		// 顶级资源列表
 		List<ResourceDo> topLevelResourceList = resourceMap.get(0);
 		List<MenuInfoRespDto> menuInfoList = new ArrayList<>();
 		topLevelResourceList.forEach(resourceDo -> {
-			MenuInfoRespDto menuInfo = new MenuInfoRespDto();
-			menuInfo.setTitle(resourceDo.getResourceName());
-			menuInfo.setHref(resourceDo.getResourceUrl());
-			menuInfo.setIcon(resourceDo.getResourceIcon());
-			menuInfo.setChild(null);
-			List<ResourceDo> secondLevelResourceList = resourceMap.get(resourceDo.getResourceId());
+			MenuInfoRespDto menuInfo = new MenuInfoRespDto(resourceDo);
+			menuInfo.setChild(getSubMenuInfoList(resourceMap, resourceDo.getResourceId()));
 			menuInfoList.add(menuInfo);
 		});
 
+		return menuInfoList;
+	}
+
+	/**
+	 * 二级菜单
+	 * @param resourceMap
+	 * @param resourceId
+	 * @return
+	 */
+	private List<MenuInfoRespDto> getSubMenuInfoList(Map<Integer, List<ResourceDo>> resourceMap, Integer resourceId) {
+		List<MenuInfoRespDto> subMenuInfoList = new ArrayList<>();
+		List<ResourceDo> secondLevelResourceList = resourceMap.get(resourceId);
+		secondLevelResourceList.forEach(secondLevelResourceDo -> {
+			subMenuInfoList.add(new MenuInfoRespDto(secondLevelResourceDo));
+		});
+
+		return subMenuInfoList;
 	}
 
 	@Override

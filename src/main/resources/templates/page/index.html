@@ -94,19 +94,6 @@
 
 <script th:src="@{/static-resources/lib/layui-v2.5.5/layui.js?v=1.0.4}" charset="utf-8"></script>
 <script th:src="@{/static-resources/js/lay-config.js?v=1.0.4}" charset="utf-8"></script>
-<script>
-    layui.use(['element', 'layer', 'layuimini'], function () {
-        var $ = layui.jquery,
-            element = layui.element,
-            layer = layui.layer;
-
-        layuimini.init('api/init.json');
-        $('.login-out').on("click", function () {
-            layer.msg('退出登录成功', function () {
-                window.location = '/page/anon/login';
-            });
-        });
-    });
-</script>
+<script th:src="@{/static-resources/js/logout.js}"></script>
 </body>
 </html>

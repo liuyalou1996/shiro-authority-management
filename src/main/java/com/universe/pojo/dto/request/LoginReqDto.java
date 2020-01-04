@@ -3,7 +3,7 @@ package com.universe.pojo.dto.request;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-public class LoginRequestDto {
+public class LoginReqDto {
 
 	private static final String REMEMBERED = "on";
 

@@ -1,5 +1,6 @@
 package com.universe.pojo.dto.response;
 
+import com.universe.pojo.domain.ResourceDo;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -13,6 +14,15 @@ public class MenuInfoRespDto {
 	private String target = "_self";
 
 	private List<MenuInfoRespDto> child;
+
+	public MenuInfoRespDto() {
+	}
+
+	public MenuInfoRespDto(ResourceDo resourceDo) {
+		this.title = resourceDo.getResourceName();
+		this.href = resourceDo.getResourceUrl();
+		this.icon = resourceDo.getResourceIcon();
+	}
 
 	public String getTitle() {
 		return title;

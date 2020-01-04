@@ -2,7 +2,7 @@ package com.universe.web.controller.system;
 
 import com.alibaba.druid.util.StringUtils;
 import com.universe.common.util.ShiroUtils;
-import com.universe.pojo.dto.request.LoginRequestDto;
+import com.universe.pojo.dto.request.LoginReqDto;
 import com.universe.pojo.dto.response.GenericRespDto;
 import com.wf.captcha.ArithmeticCaptcha;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -22,7 +22,7 @@ public class LoginController {
 	private static final String CAPTCHA_KEY = "captcha";
 
 	@PostMapping(value = "/auth/login", produces = MediaType.APPLICATION_JSON_VALUE)
-	public GenericRespDto<?> login(LoginRequestDto requestDto) {
+	public GenericRespDto<?> login(LoginReqDto requestDto) {
 		String username = requestDto.getUsername();
 		String password = requestDto.getPassword();
 		boolean rememberMe = requestDto.isRemembered();
@@ -43,14 +43,18 @@ public class LoginController {
 
 	@GetMapping(value = "/auth/captcha", produces = MediaType.APPLICATION_JSON_VALUE)
 	public GenericRespDto<String> generateVerifyCode() {
-		ArithmeticCaptcha captcha = new ArithmeticCaptcha(130, 50,2);
+		ArithmeticCaptcha captcha = new ArithmeticCaptcha(130, 50, 2);
 		Session session = ShiroUtils.getSession();
 		ShiroUtils.setSessionAttribute(CAPTCHA_KEY, captcha.text());
 
-		return GenericRespDto.<String>builder()
-			.resultCode(1)
-			.content(captcha.toBase64())
-			.build();
+		return GenericRespDto.<String>builder().resultCode(1).content(captcha.toBase64()).build();
+	}
+
+	@PostMapping(value = "/auth/logout", produces = MediaType.APPLICATION_JSON_VALUE)
+	public GenericRespDto<?> logout() {
+		Subject subject = ShiroUtils.getSubject();
+		subject.logout();
+		return GenericRespDto.builder().resultCode(1).build();
 	}
 
 }
