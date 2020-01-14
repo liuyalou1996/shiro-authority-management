@@ -32,6 +32,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author 刘亚楼
+ * @date 2020/1/14
+ */
 @Configuration
 @EnableConfigurationProperties(ShiroProperties.class)
 @PropertySource("classpath:shiro/shiro.properties")
@@ -98,6 +102,7 @@ public class ShiroConfig {
 		@Bean
 		public DefaultWebSessionManager defaultWebSessoinManager(RedisSessionDAO redisSessionDAO) {
 			DefaultWebSessionManager sessionManger = new DefaultWebSessionManager();
+			sessionManger.setSessionIdUrlRewritingEnabled(false);
 			sessionManger.setSessionDAO(redisSessionDAO);
 			sessionManger.setGlobalSessionTimeout(shiroProperties.getSessionTimeout() * 1000);
 			Cookie cookie = new SimpleCookie("SHIROID");
@@ -119,8 +124,7 @@ public class ShiroConfig {
 		}
 
 		@Bean
-		public SecurityManager securityManager(ShiroJdbcRealm shiroJdbcRealm,
-																					 RedisCacheManager redisCacheManager,
+		public SecurityManager securityManager(ShiroJdbcRealm shiroJdbcRealm, RedisCacheManager redisCacheManager,
 																					 DefaultWebSessionManager defaultWebSessoinManager,
 																					 CookieRememberMeManager remembermeManager) {
 			DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();

@@ -24,6 +24,7 @@
         where tr.resource_code is not null and tu.username = #{username}
     </select>
 
+    <!--根据用户名查询所有的目录和菜单-->
     <select id="getMenuByUsername" parameterType="string" resultMap="resourceResultMap">
         select tr.resource_id,
                tr.parent_id,
@@ -31,7 +32,7 @@
                tr.resource_icon
         from tbl_resource tl
         inner join tbl_resource tr on (tl.resource_id = tr.parent_id or tl.parent_id = 0)
-        where tr.resource_order is not null and tr.status = '1'
+        where tr.resource_type in ('1','2') and tr.status = '1'
         order by tr.parent_id,tr.resource_order
     </select>
 </mapper>

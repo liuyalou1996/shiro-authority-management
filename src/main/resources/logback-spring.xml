@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="60 seconds" debug="true">
-	<property name="basePath" value="logs" />
-	<property name="appLogPath" value="${basePath}/app" />
-	<property name="druidLogPath" value="${basePath}/druid" />
-	<property name="errorLogPath" value="${basePath}/error" />
+	<property name="basePath" value="F:\\opt\\appl\\tomcat\\logs\\shiro-authority-management" />
+	<property name="appLogPath" value="${basePath}\\app" />
+	<property name="druidLogPath" value="${basePath}\\druid" />
+	<property name="errorLogPath" value="${basePath}\\error" />
 
 	<appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>

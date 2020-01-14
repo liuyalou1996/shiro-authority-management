@@ -1,7 +1,10 @@
 package com.universe.common.holder;
 
 import org.springframework.context.ApplicationContext;
-
+/**
+ * @author 刘亚楼
+ * @date 2020/1/14
+ */
 public abstract class WebApplicationContextHolder {
 
   private static ApplicationContext context;

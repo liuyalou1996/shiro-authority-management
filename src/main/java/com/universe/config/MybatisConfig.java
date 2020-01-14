@@ -11,7 +11,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-
+/**
+ * @author 刘亚楼
+ * @date 2020/1/14
+ */
 @Configuration
 @EnableTransactionManagement
 @MapperScan(basePackages = "com.universe.mapper", sqlSessionFactoryRef = "sqlSessionFactory")

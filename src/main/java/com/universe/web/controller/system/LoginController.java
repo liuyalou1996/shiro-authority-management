@@ -5,6 +5,7 @@ import com.universe.common.util.ShiroUtils;
 import com.universe.pojo.dto.request.LoginReqDto;
 import com.universe.pojo.dto.response.GenericRespDto;
 import com.wf.captcha.ArithmeticCaptcha;
+import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authc.pam.UnsupportedTokenException;
 import org.apache.shiro.session.Session;
@@ -35,7 +36,12 @@ public class LoginController {
 			throw new UnsupportedTokenException("验证码错误!");
 		}
 
-		subject.login(token);
+		try {
+			subject.login(token);
+		} catch (AuthenticationException e) {
+			throw e;
+		}
+
 		// 登录成功后去除验证码
 		ShiroUtils.removeSessionAttribute(CAPTCHA_KEY);
 		return GenericRespDto.builder().resultCode(1).build();

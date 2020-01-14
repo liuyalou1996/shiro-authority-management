@@ -27,8 +27,8 @@ import java.util.Set;
 
 /**
  * 消息转换器以及Thymeleaf试图解析器配置，通过application.properties配置Thymeleaf更方便
- * @author liuyalou
- * @date 2019年8月11日
+ * @author 刘亚楼
+ * @date 2020/1/14
  */
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {

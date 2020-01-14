@@ -35,8 +35,8 @@ function initVerifyCode() {
 
 function addListenerOnLogin() {
     layui.use(['form'], function () {
-        var form = layui.form,
-            layer = layui.layer;
+        const form = layui.form,
+              layer = layui.layer;
 
         // 登录过期的时候，跳出ifram框架
         if (top.location != self.location) {
@@ -45,7 +45,7 @@ function addListenerOnLogin() {
 
         // 进行登录操作
         form.on('submit(login)', function (data) {
-            var fields = data.field;
+            const fields = data.field;
             if (fields.username == '') {
                 layer.msg('用户名不能为空');
                 return false;
