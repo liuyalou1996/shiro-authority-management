@@ -191,6 +191,12 @@ select * from tbl_role tr
                   inner join tbl_user tu on tu.user_id = tur.user_id
 where tu.username = 'guest';
 
+# 查询菜单信息
+select tr.* from tbl_resource tl
+inner join tbl_resource tr on (tl.resource_id = tr.parent_id or tl.parent_id = 0)
+where tr.resource_type in ('1','2') and tr.status = '1'
+order by tr.parent_id,tr.resource_order;
+
 
 
 
